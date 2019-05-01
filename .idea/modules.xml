@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Jsp.iml" filepath="$PROJECT_DIR$/Jsp.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/Jsp.iml" filepath="$PROJECT_DIR$/Jsp.iml" />
+>>>>>>> origin/master
     </modules>
   </component>
 </project>
