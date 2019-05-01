@@ -23,10 +23,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/home.jsp">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="home.jsp">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link" href="logout">Logout</a>
             </li>
         </ul>
     </div>

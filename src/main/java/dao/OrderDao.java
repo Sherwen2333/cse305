@@ -2,6 +2,7 @@ package dao;
 
 import model.*;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +79,19 @@ public class OrderDao {
          * */
 
 		/*Sample data begins*/
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            final String SQL_USERNAME = "root";
+            final String SQL_PASSWORD = "hzwasdfghjkl;'";
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/proj?useSSL=false&serverTimezone=UTC", SQL_USERNAME, SQL_PASSWORD);
+            String query = "INSERT into Bid values (?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.executeUpdate();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return "success";
 		/*Sample data ends*/
 
@@ -119,7 +133,7 @@ public class OrderDao {
             OrderPriceEntry entry = new OrderPriceEntry();
             entry.setOrderId(orderId);
             entry.setDate(new Date());
-            entry.setStockSymbol("aapl");
+            entry.setStockSymbol("FUCK");
             entry.setPricePerShare(150.0);
             entry.setPrice(100.0);
             orderPriceHistory.add(entry);

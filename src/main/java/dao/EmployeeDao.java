@@ -113,7 +113,7 @@ public class EmployeeDao {
 			Employee employee = new Employee();
 			employee.setId("111-11-1111");
 			employee.setEmail("shiyong@cs.sunysb.edu");
-			employee.setFirstName("Shiyong");
+			employee.setFirstName("FUCKU");
 			employee.setLastName("Lu");
 			employee.setAddress("123 Success Street");
 			employee.setLocation(location);

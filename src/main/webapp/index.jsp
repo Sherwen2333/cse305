@@ -11,6 +11,7 @@
 				
 				//redirect to home page if already logged in
 				if(email != null) {
+
 					if(role.equals("manager")) {
 						response.sendRedirect("managerHome.jsp");
 					}
@@ -25,10 +26,10 @@
 				String status = request.getParameter("status");
 				if(status != null) {
 					if(status.equals("false")) {
-						out.print("Incorrect Login credentials!");
+						System.out.print("Incorrect Login credentials!");
 					}
 					else {
-						out.print("Some error occurred! Please try again.");
+						System.out.print("Some error occurred! Please try again.");
 					}
 				}
 			%>
