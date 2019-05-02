@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+
+.loginBlock {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -200px;
+	margin-top: -200px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	background-color: white;
+	min-width: 300px;
+	min-height: 300px;
+	width: 300px;
+	max-width: 300px;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
+}

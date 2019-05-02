@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="heading" value="Home"/>
-<%@ include file="header.jsp" %>
 
-<div class="container">
-			<h2>Login</h2>
+<style type="text/css">
+	body{
+		background-image:url("img/pic.jpeg");
+	}
+</style>
+<body>
+<link href="login.css" rel="stylesheet" />
+<link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+<div class="loginBlock">
+			<h2 class="loginTitle">Login</h2>
 			<%
 				String email = (String)session.getAttribute("email");
 				String role = (String)session.getAttribute("role");
@@ -35,6 +42,7 @@
 					}
 				}
 			%>
+		<div class="loginTitle">
 			<form action="login">
 				<div class="form-group">
 					<input type="email" class="form-control" name="username" placeholder="Username">
