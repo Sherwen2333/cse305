@@ -36,6 +36,9 @@ public class LoginDao {
 		/*Sample data begins*/
 		Login login = new Login();
 		try{
+			if(role.equals("customerRepresentative")){
+				role="Customer Representative";
+			}
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
@@ -43,6 +46,7 @@ public class LoginDao {
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, username);
 			ps.setString(2,role);
+
 			ps.setString(3, password);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {

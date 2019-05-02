@@ -312,7 +312,40 @@ public class EmployeeDao {
 		 * employeeID, which is the Employee's ID who's details have to be fetched, is given as method parameter
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
+
+			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN AND Person.ZipCode=Location.Zipcode";
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery(query);
+
+			while (rs.next()){
+				Employee employee = new Employee();
+				employee.setId(""+rs.getInt("SSN"));
+				employee.setEmail(""+rs.getString("Email"));
+				employee.setLastName(""+rs.getString("LastName"));
+				employee.setFirstName(""+rs.getString("FirstName"));
+				employee.setAddress(""+rs.getString("Address"));
+				location.setCity(""+rs.getString("City"));
+				location.setState(""+rs.getString("State"));
+				location.setZipCode(rs.getInt("Zipcode"));
+				employee.setLocation(location);
+				int a=rs.getInt("Zipcode");
+				employee.setZipcode(rs.getInt("Zipcode"));
+
+				employee.setTelephone(""+rs.getString("Telephone"));
+				employee.setEmployeeID(""+rs.getInt("SSN"));
+				employee.setHourlyRate(rs.getInt("HourlyRate"));
+				employees.add(employee);
+
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return getDummyEmployee();
 	}
 	

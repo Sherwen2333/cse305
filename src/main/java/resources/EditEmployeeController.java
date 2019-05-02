@@ -37,7 +37,7 @@ public class EditEmployeeController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String employeeID = request.getParameter("employeeID");
-				
+		System.out.println(employeeID);
 		EmployeeDao employeeDao = new EmployeeDao();
 		Employee editEmployee = employeeDao.getEmployee(employeeID);
 		
