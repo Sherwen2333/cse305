@@ -15,15 +15,18 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Number of stocks</th>
+                    <th>Price per share</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${stocks}" var="cd">
                     <tr>
                         <td>${cd.symbol}</td>
-                        <td>${cd.name}</td>
+                        <td>${cd.name}</td>p
                         <td>${cd.type}</td>
                         <td>${cd.numShares}</td>
+                        <td>${cd.price}</td>
                         <td></td>
                     </tr>
                 </c:forEach>

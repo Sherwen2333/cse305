@@ -66,7 +66,15 @@
             <input type="text" class="form-control" id="employeeHourlyRate" name="employeeHourlyRate"
                    placeholder="Hourly Rate" required>
         </div>
+        </div>
+        <div class="form-group">
+         <%--@declare id="role"--%><label for="role">Role</label>
+        <select class="form-control" name="role">
 
+        <option value="manager">Manager</option>
+        <option value="customerRepresentative">Customer Representative</option>
+         </select>
+            </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

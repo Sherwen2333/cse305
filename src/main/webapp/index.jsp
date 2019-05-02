@@ -26,8 +26,10 @@
 				String status = request.getParameter("status");
 				if(status != null) {
 					if(status.equals("false")) {
+
 						System.out.print("Incorrect Login credentials!");
 					}
+
 					else {
 						System.out.print("Some error occurred! Please try again.");
 					}
@@ -50,4 +52,6 @@
 				<input type="submit" value="Login" class="btn btn-success"/>
 			</form>
 		</div>
+
+<script type="text/javascript"> window.onload = alertName; </script>
 <%@ include file="footer.jsp" %>

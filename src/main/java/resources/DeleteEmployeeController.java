@@ -37,9 +37,10 @@ public class DeleteEmployeeController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String employeeID = request.getParameter("employeeID");
-		
+		String email=request.getParameter("employeeEmail");
+
 		EmployeeDao employeeDao = new EmployeeDao();
-		String result = employeeDao.deleteEmployee(employeeID);
+		String result = employeeDao.deleteEmployee(employeeID,email);
 		
 		if(result.equals("success")) {
 			response.sendRedirect("managerHome.jsp?status=deleteSuccess");

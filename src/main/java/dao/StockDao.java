@@ -1,10 +1,15 @@
 package dao;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.Stock;
+import model.Customer;
+import model.Employee;
+import model.Location;
+
 
 public class StockDao {
 
@@ -22,11 +27,29 @@ public class StockDao {
     public List<Stock> getDummyStocks() {
         List<Stock> stocks = new ArrayList<Stock>();
 
-		/*Sample data begins*/
-        for (int i = 0; i < 10; i++) {
-            stocks.add(getDummyStock());
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+
+            //	Statement state = con.createStatement();
+            String query = "SELECT DISTINCT * FROM STOCK";
+            Statement state = con.createStatement();
+            ResultSet rs = state.executeQuery(query);
+
+            while (rs.next()){
+        Stock stock=new Stock();
+      stock.setSymbol(""+rs.getString("StockSymbol"));
+        stock.setName(""+rs.getString("CompanyName"));
+        stock.setType(""+rs.getString("StockType"));
+        stock.setNumShares(rs.getInt("NumShares"));
+        stock.setPrice(rs.getInt("PricePerShare"));
+        stocks.add(stock);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-		/*Sample data ends*/
 
         return stocks;
     }
@@ -64,12 +87,29 @@ public class StockDao {
     }
 
     public String setStockPrice(String stockSymbol, double stockPrice) {
-        /*
-         * The students code to fetch data from the database will be written here
-         * Perform price update of the stock symbol
-         */
+        try {
 
-        return "success";
+            //UPDATE Stock SET PricePerShare=20 WHERE StockSymbol='F'
+
+            //  int i = state.executeUpdate("UPDATE zhaowhuang.Stock SET PricePerShare = "+stockPrice+"WHERE StockSymbol ="+stockSymbol);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query = "UPDATE Stock SET PricePerShare=? WHERE StockSymbol=?";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setDouble(1, stockPrice);
+            ps.setString(2, stockSymbol);
+
+            ps.execute();
+
+            return "success";
+        }
+
+
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "failure";
     }
 	
 	public List<Stock> getOverallBestsellers() {

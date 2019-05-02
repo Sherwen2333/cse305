@@ -54,6 +54,8 @@ public class AddEmployeeController extends HttpServlet {
 		String ssn = request.getParameter("employeeSSN");
 		String startDate = request.getParameter("employeeStartDate");
 		float hourlyRate = Float.parseFloat(request.getParameter("employeeHourlyRate"));
+		String role=request.getParameter("role");
+
 
 
         Location location = new Location();
@@ -65,16 +67,23 @@ public class AddEmployeeController extends HttpServlet {
 		employee.setEmail(email);
 		employee.setFirstName(firstName);
 		employee.setLastName(lastName);
+		employee.setPassword(password);
 		employee.setAddress(address);
+		employee.setCity(city);;
+		employee.setState(state);
+		employee.setZipcode(zipcode);
 		employee.setStartDate(startDate);
 		employee.setTelephone(telephone);
 		employee.setEmployeeID(ssn);
 		employee.setSsn(ssn);
         employee.setLocation(location);
 		employee.setHourlyRate(hourlyRate);
+		employee.setRole(role);
 		
 		EmployeeDao employeeDao = new EmployeeDao();
 		String result = employeeDao.addEmployee(employee);
+
+
 		
 		if(result.equals("success")) {
 			Login login = new Login();
@@ -87,11 +96,11 @@ public class AddEmployeeController extends HttpServlet {
 				response.sendRedirect("managerHome.jsp?status=addEmployeeSuccess");
 			}
 			else {
-				response.sendRedirect("viewAddEmployee.jsp?status=error");
+				response.sendRedirect("addEmployee.jsp?status=error");
 			}
 		}
 		else {
-			response.sendRedirect("viewAddEmployee.jsp?status=error");
+			response.sendRedirect("addEmployee.jsp?status=error");
 		}
 
 		
