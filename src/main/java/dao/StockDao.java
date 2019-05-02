@@ -1,30 +1,17 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.Stock;
+import model.Customer;
+import model.Employee;
+import model.Location;
+
 
 public class StockDao {
-    public static void main(String[] args) {
-//        try{
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-//            String query = "SELECT * FROM Stock";
-//            PreparedStatement ps = con.prepareStatement(query);
-//            ResultSet rs = ps.executeQuery();
-//            while(rs.next()) {
-//                System.out.println(rs.getString(1));
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-    }
 
     public Stock getDummyStock() {
         Stock stock = new Stock();
@@ -40,11 +27,29 @@ public class StockDao {
     public List<Stock> getDummyStocks() {
         List<Stock> stocks = new ArrayList<Stock>();
 
-		/*Sample data begins*/
-        for (int i = 0; i < 10; i++) {
-            stocks.add(getDummyStock());
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+
+            //	Statement state = con.createStatement();
+            String query = "SELECT DISTINCT * FROM STOCK";
+            Statement state = con.createStatement();
+            ResultSet rs = state.executeQuery(query);
+
+            while (rs.next()){
+        Stock stock=new Stock();
+      stock.setSymbol(""+rs.getString("StockSymbol"));
+        stock.setName(""+rs.getString("CompanyName"));
+        stock.setType(""+rs.getString("StockType"));
+        stock.setNumShares(rs.getInt("NumShares"));
+        stock.setPrice(rs.getInt("PricePerShare"));
+        stocks.add(stock);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-		/*Sample data ends*/
 
         return stocks;
     }
@@ -62,71 +67,49 @@ public class StockDao {
     }
 
 	public List<Stock> getAllStocks() {
-
-        /*
+		
+		/*
 		 * The students code to fetch data from the database will be written here
 		 * Return list of stocks
 		 */
-        List<Stock> stocks = new ArrayList<Stock>();
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-            String query = "SELECT * FROM Stock";
-            PreparedStatement ps = con.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                Stock stock= new Stock();
-                stock.setName(rs.getString(2));
-                stock.setNumShares(rs.getInt(4));
-                stock.setPrice(rs.getDouble(5));
-                stock.setSymbol(rs.getString(1));
-                stock.setType(rs.getString(3));
-            stocks.add(stock);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return stocks;
+		
+		return getDummyStocks();
 
 	}
 
     public Stock getStockBySymbol(String stockSymbol)
     {
-
-    Stock stock = new Stock();
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-            String query = "SELECT * FROM Stock WHERE StockSymbol=?;";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, stockSymbol);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                stock.setName(rs.getString(2));
-                stock.setNumShares(rs.getInt(4));
-                stock.setPrice(rs.getDouble(5));
-                stock.setSymbol(stockSymbol);
-                stock.setType(rs.getString(3));
-            }else {
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         /*
 		 * The students code to fetch data from the database will be written here
 		 * Return stock matching symbol
 		 */
-        return stock;
+        return getDummyStock();
     }
 
     public String setStockPrice(String stockSymbol, double stockPrice) {
-        /*
-         * The students code to fetch data from the database will be written here
-         * Perform price update of the stock symbol
-         */
+        try {
 
-        return "success";
+            //UPDATE Stock SET PricePerShare=20 WHERE StockSymbol='F'
+
+            //  int i = state.executeUpdate("UPDATE zhaowhuang.Stock SET PricePerShare = "+stockPrice+"WHERE StockSymbol ="+stockSymbol);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query = "UPDATE Stock SET PricePerShare=? WHERE StockSymbol=?";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setDouble(1, stockPrice);
+            ps.setString(2, stockSymbol);
+
+            ps.execute();
+
+            return "success";
+        }
+
+
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "failure";
     }
 	
 	public List<Stock> getOverallBestsellers() {
@@ -153,7 +136,6 @@ public class StockDao {
 
 	public List getStocksByCustomer(String customerId) {
 
-
 		/*
 		 * The students code to fetch data from the database will be written here
 		 * Get stockHoldings of customer with customerId
@@ -164,28 +146,12 @@ public class StockDao {
 
     public List<Stock> getStocksByName(String name) {
 
-        List<Stock> stocks = new ArrayList<Stock>();
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-            String query = "SELECT * FROM Stock where CompanyName like ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1,'%'+name+'%');
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                Stock stock= new Stock();
-                stock.setName(rs.getString(2));
-                stock.setNumShares(rs.getInt(4));
-                stock.setPrice(rs.getDouble(5));
-                stock.setSymbol(rs.getString(1));
-                stock.setType(rs.getString(3));
-                stocks.add(stock);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+		/*
+		 * The students code to fetch data from the database will be written here
+		 * Return list of stocks matching "name"
+		 */
 
-        return stocks;
+        return getDummyStocks();
     }
 
     public List<Stock> getStockSuggestions(String customerID) {
@@ -217,46 +183,19 @@ public class StockDao {
 		 */
 
         List<String> types = new ArrayList<String>();
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-            String query = "SELECT distinct StockType FROM Stock";
-            PreparedStatement ps = con.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-
-                types.add(rs.getString(1));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        types.add("technology");
+        types.add("finance");
         return types;
 
     }
 
     public List<Stock> getStockByType(String stockType) {
 
-        List<Stock> stocks = new ArrayList<Stock>();
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-            String query = "SELECT * FROM Stock where StockType like ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1,stockType);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                Stock stock= new Stock();
-                stock.setName(rs.getString(2));
-                stock.setNumShares(rs.getInt(4));
-                stock.setPrice(rs.getDouble(5));
-                stock.setSymbol(rs.getString(1));
-                stock.setType(rs.getString(3));
-                stocks.add(stock);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return stocks;
+		/*
+		 * The students code to fetch data from the database will be written here
+		 * Return list of stocks of type "stockType"
+		 */
 
+        return getDummyStocks();
     }
 }
