@@ -57,7 +57,7 @@
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeZipcode">Zipcode</label>
-	    <input type="text" class="form-control" id="employeeZipcode" name="employeeZipcode" placeholder="Zipcode" value=${editEmployee.zipCode} required>
+	    <input type="text" class="form-control" id="employeeZipcode" name="employeeZipcode" placeholder="Zipcode" value=${editEmployee.zipcode} required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeTelephone">Telephone</label>

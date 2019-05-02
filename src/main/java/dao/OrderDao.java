@@ -8,6 +8,14 @@ import java.util.Date;
 import java.util.List;
 
 public class OrderDao {
+    public static void main(String[] args) {
+        Order order= new Order();
+        Class a = order.getClass();
+        System.out.println(a.getName());
+        TrailingStopOrder trailingStopOrder= new TrailingStopOrder();
+        a = trailingStopOrder.getClass();
+        System.out.println(a.getName());
+    }
 
     public Order getDummyTrailingStopOrder() {
         TrailingStopOrder order = new TrailingStopOrder();
@@ -81,13 +89,35 @@ public class OrderDao {
 		/*Sample data begins*/
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            final String SQL_USERNAME = "root";
-            final String SQL_PASSWORD = "hzwasdfghjkl;'";
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/proj?useSSL=false&serverTimezone=UTC", SQL_USERNAME, SQL_PASSWORD);
-            String query = "INSERT into Bid values (?,?,?,?,?)";
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query = "INSERT into Orders  (EmployeeId,OrderId,OrderType,StockSymbol,NumberOfShare,buy_sell,percentage)\n" +
+                    "values (?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1,Integer.parseInt(employee.getEmployeeID()));
+            ps.setNull(2, Types.NULL);
+            ps.setInt(3,order.getNumShares());
+            ps.setInt(4,Integer.parseInt(customer.getClientId()));
+            ps.setInt(5,customer.getAccountNumber());
+            ps.setDouble(6,stock.getPrice());
+            java.util.Date date = order.getDatetime();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            ps.setDate(7,sqlDate);
 
             ps.executeUpdate();
+
+            Class a = order.getClass();
+            if(a.getName()=="model.MarketOrder"){
+
+            }
+            else if(a.getName()=="model.MarketOnCloseOrder"){
+
+            }else if(a.getName()=="model.TrailingStopOrder"){
+
+            }else if(a.getName()=="model.HiddenStopOrder"){
+
+            }
+
+
         }
         catch (Exception e){
             e.printStackTrace();

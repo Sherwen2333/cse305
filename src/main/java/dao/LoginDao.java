@@ -7,20 +7,20 @@ public class LoginDao {
 	 * This class handles all the database operations related to login functionality
 	 */
     public static void main(String[] args) {
-        try{
-        Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-        String query = "SELECT * FROM zhaowhuang.User WHERE user.Email=? and user.Password=?";
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, "ak123@qq.com");
-        ps.setString(2, "ak123");
-//        ps.setString(3, "Customer");
-        ResultSet rs = ps.executeQuery();
-        if(rs.next()) {
-            System.out.println(rs.getString("Role"));}}
-        catch (Exception e){
-            e.printStackTrace();
-        }
+//        try{
+//        Class.forName("com.mysql.jdbc.Driver");
+//            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+//        String query = "SELECT * FROM zhaowhuang.User WHERE user.Email=? and user.Password=?";
+//        PreparedStatement ps = con.prepareStatement(query);
+//        ps.setString(1, "ak123@qq.com");
+//        ps.setString(2, "ak123");
+////        ps.setString(3, "Customer");
+//        ResultSet rs = ps.executeQuery();
+//        if(rs.next()) {
+//            System.out.println(rs.getString("Role"));}}
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
     }
 	
 	public Login login(String username, String password, String role) {
@@ -36,21 +36,20 @@ public class LoginDao {
 		/*Sample data begins*/
 		Login login = new Login();
 		try{
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			final String SQL_USERNAME = "root";
-			final String SQL_PASSWORD = "hzwasdfghjkl;'";
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/proj?useSSL=false&serverTimezone=UTC", SQL_USERNAME, SQL_PASSWORD);
-			String query = "SELECT * FROM proj.User WHERE user.Username=? and user.Password=? and user.role=?";
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+			String query = "SELECT * FROM zhaowhuang.User WHERE user.Email=? and user.Password=? and user.Role=?";
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, username);
-			ps.setString(2, password);
-			ps.setString(3, role);
+			ps.setString(1, "ak123@qq.com");
+			ps.setString(2, "ak123");
+			ps.setString(3, "Customer");
+//        ps.setString(3, "Customer");
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				System.out.println("dasjdlkasjdlaksdjlkasdjas");
 				login.setUsername(username);
 				login.setPassword(password);
-				login.setRole(role);
+				login.setRole("Manager");
 
 			}else {
 				login = null;

@@ -1,5 +1,9 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +47,7 @@ public class CustomerDao {
     }
 
     /**
-	 * @param String searchKeyword
+	 * @param  searchKeyword
 	 * @return ArrayList<Customer> object
 	 */
 	public List<Customer> getCustomers(String searchKeyword) {
@@ -72,15 +76,34 @@ public class CustomerDao {
 	}
 
 	public Customer getCustomer(String customerID) {
-
+		Customer customer= new Customer();
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+			String query = "SELECT CreditCardNumber,Rating,ClientId,DateOpened, AccountNumber from Accounts, Clients where Accounts.ClientId=Clients.Id and ClientId=?";
+			PreparedStatement ps = con.prepareStatement(query);
+//			ps.setString(1,customerID);
+//			ResultSet rs = ps.executeQuery();
+//			if(rs.next()) {
+//				customer.setCreditCard(rs.getString(1));
+//				customer.setRating(rs.getInt(2));
+//				customer.setClientId(rs.getString(3));
+//				customer.setAccountCreationTime(rs.getString(4));
+//				customer.setAccountNumber(rs.getInt(5));
+//			}else {
+//
+//			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		/*
 		 * This method fetches the customer details and returns it
 		 * customerID, which is the Customer's ID who's details have to be fetched, is given as method parameter
 		 * The students code to fetch data from the database will be written here
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
-		
-		return getDummyCustomer();
+
+		return customer;
 	}
 	
 	public String deleteCustomer(String customerID) {
@@ -99,6 +122,21 @@ public class CustomerDao {
 
 
 	public String getCustomerID(String email) {
+		String customerID="";
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+			String query = "SELECT Id from Clients where Email=?";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1,email);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+			customerID = rs.getString(1);
+			}else {
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		/*
 		 * This method returns the Customer's ID based on the provided email address
 		 * The students code to fetch data from the database will be written here
@@ -106,7 +144,7 @@ public class CustomerDao {
 		 * The Customer's ID is required to be returned as a String
 		 */
 
-		return "111-11-1111";
+		return customerID;
 	}
 
 
@@ -152,7 +190,9 @@ public class CustomerDao {
     }
 
     public List<Customer> getAllCustomers() {
-        /*
+		Customer customer= new Customer();
+//		customer.set
+		/*
 		 * This method fetches returns all customers
 		 */
         return getDummyCustomerList();

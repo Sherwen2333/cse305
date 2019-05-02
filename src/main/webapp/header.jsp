@@ -14,10 +14,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>${heading}</title>
     <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="login.css" rel="stylesheet" />
+
     <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
     <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
-<body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="#">Online stock trading</a>
     <div class="collapse navbar-collapse" id="navbarNav">

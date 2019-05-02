@@ -31,18 +31,10 @@ public class Employee extends Person {
 		this.hourlyRate = hourlyRate;
 	}
 
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
 
 	private String employeeID;
 	private String startDate;
 	private float hourlyRate;
-	private String level;
 
 
 
