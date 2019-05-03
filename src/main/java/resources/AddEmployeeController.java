@@ -47,6 +47,7 @@ public class AddEmployeeController extends HttpServlet {
 		String firstName = request.getParameter("employeeFirstName");
 		String lastName = request.getParameter("employeeLastName");
 		String address = request.getParameter("employeeAddress");
+		//address=address.replaceAll("\\s","");
 		String city = request.getParameter("employeeCity");
 		String state= request.getParameter("employeeState");
 		int zipcode = Integer.parseInt(request.getParameter("employeeZipcode"));

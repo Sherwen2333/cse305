@@ -65,12 +65,17 @@ public class AddCustomerController extends HttpServlet {
 		customer.setFirstName(firstName);
 		customer.setLastName(lastName);
 		customer.setAddress(address);
-        customer.setLocation(location);
+		customer.setCity(city);
+		customer.setState(state);
+		customer.setZipcode(zipcode);
+
+		customer.setLocation(location);
 		customer.setTelephone(telephone);
 		customer.setId(ssn);
 		customer.setSsn(ssn);
 		customer.setCreditCard(creditCard);
 		customer.setRating(rating);
+		customer.setRole("Customer");
 		
 		CustomerDao customerDao = new CustomerDao();
 		String result = customerDao.addCustomer(customer);

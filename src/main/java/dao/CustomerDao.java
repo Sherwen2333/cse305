@@ -1,9 +1,6 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,10 +154,50 @@ public class CustomerDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database insertion of the customer details and return "success" or "failure" based on result of the database insertion.
 		 */
-		
-		/*Sample data begins*/
-		return "success";
-		/*Sample data ends*/
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+			String query = "INSERT Location VALUE (?,?,?,?)";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1,customer.getZipcode());
+			ps.setString(2,customer.getCity());
+			ps.setString(3,customer.getState());
+			ps.setInt(4,Integer.parseInt(customer.getSsn()));
+			ps.execute();
+			query = "INSERT Person VALUE (?,?,?,?,?,?)";
+			ps = con.prepareStatement(query);
+			ps.setInt(1,Integer.parseInt(customer.getSsn()));
+			ps.setString(2,customer.getLastName());
+			ps.setString(3,customer.getFirstName());
+			ps.setString(4,customer.getAddress());
+			ps.setInt(5,customer.getZipcode());
+			ps.setString(6,customer.getTelephone());
+			ps.execute();
+			query = "INSERT Clients VALUE (?,?,?)";
+			ps = con.prepareStatement(query);
+			ps.setString(1,customer.getEmail());
+			ps.setString(2,customer.getCreditCard());
+			ps.setInt(3,Integer.parseInt(customer.getSsn()));
+
+			ps.execute();
+
+			query = "INSERT USER VALUE (?,?,?)";
+			ps = con.prepareStatement(query);
+			ps.setString(1,customer.getEmail());
+			ps.setString(2,customer.getRole());
+			ps.setString(3,customer.getPassword());
+			ps.execute();
+
+			return "success";
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "failure";
+
+
+
 
 	}
 
