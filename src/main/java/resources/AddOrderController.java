@@ -92,6 +92,7 @@ public class AddOrderController extends HttpServlet {
             TrailingStopOrder order = new TrailingStopOrder();
             order.setDatetime(new Date());
             order.setPercentage(Double.parseDouble(orderStockPercentage));
+
             order.setNumShares(Integer.parseInt(numShares));
             result = orderDao.submitOrder(order, customer, employee, stock);
 

@@ -277,7 +277,7 @@ public class EmployeeDao {
 				location.setZipCode(rs.getInt("Zipcode"));
 				employee.setLocation(location);
 				int a=rs.getInt("Zipcode");
-				employee.setZipcode(rs.getInt("Zipcode"));
+//				employee.setZipcode(rs.getInt("Zipcode"));
 
 				employee.setTelephone(""+rs.getString("Telephone"));
 				employee.setEmployeeID(""+rs.getInt("SSN"));
@@ -317,6 +317,7 @@ public class EmployeeDao {
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
 		try{
+			List<Employee> employees= new ArrayList<Employee>();
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
@@ -324,7 +325,7 @@ public class EmployeeDao {
 			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN AND Person.ZipCode=Location.Zipcode";
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
-
+			Location location= new Location();
 			while (rs.next()){
 				Employee employee = new Employee();
 				employee.setId(""+rs.getInt("SSN"));
