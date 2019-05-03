@@ -68,6 +68,9 @@ public class UpdateEmployeeController extends HttpServlet {
 		employee.setSsn(ssn);
 		employee.setHourlyRate(hourlyRate);
         employee.setLocation(location);
+		employee.setCity(city);
+		employee.setState(state);
+		employee.setZipcode(zipcode);
 
 		EmployeeDao employeeDao = new EmployeeDao();
 		String result = employeeDao.editEmployee(employee);

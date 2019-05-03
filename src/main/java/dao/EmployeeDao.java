@@ -92,9 +92,6 @@ public class EmployeeDao {
 	public String addEmployee(Employee employee) {
 
 
-
-
-
 		/*
 		 * All the values of the add employee form are encapsulated in the employee object.
 		 * These can be accessed by getter methods (see Employee class in model package).
@@ -105,11 +102,12 @@ public class EmployeeDao {
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-			String query = "INSERT Location VALUE (?,?,?)";
+			String query = "INSERT Location VALUE (?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1,employee.getZipcode());
 			ps.setString(2,employee.getCity());
 			ps.setString(3,employee.getState());
+			ps.setInt(4,Integer.parseInt(employee.getSsn()));
 			ps.execute();
 			query = "INSERT Person VALUE (?,?,?,?,?,?)";
 			ps = con.prepareStatement(query);
@@ -128,8 +126,9 @@ public class EmployeeDao {
 			ps.setString(4,employee.getEmail());
 			ps.execute();
 
-			query = "INSERT USER VALUE (?,?,?)";
+			query = "INSERT USER VALUE (?,?,?,?)";
 			ps = con.prepareStatement(query);
+			ps.setInt(4,Integer.parseInt(employee.getSsn()));
 			ps.setString(1,employee.getEmail());
 			ps.setString(2,employee.getRole());
 			ps.setString(3,employee.getPassword());
@@ -158,35 +157,37 @@ public class EmployeeDao {
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-			String query = "INSERT Location VALUE (?,?,?)";
+			String query = "UPDATE Location SET City=? AND State=? AND Zipcode=? WHERE SSN="+Integer.parseInt(employee.getSsn());
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1,employee.getZipcode());
-			ps.setString(2,employee.getCity());
-			ps.setString(3,employee.getState());
-			ps.execute();
-			query = "INSERT Person VALUE (?,?,?,?,?,?)";
-			ps = con.prepareStatement(query);
-			ps.setInt(1,Integer.parseInt(employee.getSsn()));
-			ps.setString(2,employee.getLastName());
-			ps.setString(3,employee.getFirstName());
-			ps.setString(4,employee.getAddress());
-			ps.setInt(5,employee.getZipcode());
-			ps.setString(6,employee.getTelephone());
-			ps.execute();
-			query = "INSERT Employee VALUE (?,?,?,?)";
-			ps = con.prepareStatement(query);
-			ps.setInt(1,Integer.parseInt(employee.getSsn()));
-			ps.setDate(2,Date.valueOf(employee.getStartDate()));
-			ps.setInt(3,Math.round(employee.getHourlyRate()));
-			ps.setString(4,employee.getEmail());
-			ps.execute();
+			ps.setString(1,employee.getCity());
+			ps.setString(2,employee.getState());
+			ps.setInt(3,employee.getZipcode());
 
-			query = "INSERT USER VALUE (?,?,?)";
-			ps = con.prepareStatement(query);
-			ps.setString(1,employee.getEmail());
-			ps.setString(2,employee.getRole());
-			ps.setString(3,employee.getPassword());
 			ps.execute();
+	query = "UPDATE Person SET City=? AND State=? AND Zipcode=? WHERE SSN="+Integer.parseInt(employee.getSsn());
+//
+//			ps = con.prepareStatement(query);
+//			ps.setInt(1,Integer.parseInt(employee.getSsn()));
+//			ps.setString(2,employee.getLastName());
+//			ps.setString(3,employee.getFirstName());
+//			ps.setString(4,employee.getAddress());
+//			ps.setInt(5,employee.getZipcode());
+//			ps.setString(6,employee.getTelephone());
+//			ps.execute();
+//			query = "INSERT Employee VALUE (?,?,?,?)";
+//			ps = con.prepareStatement(query);
+//			ps.setInt(1,Integer.parseInt(employee.getSsn()));
+//			ps.setDate(2,Date.valueOf(employee.getStartDate()));
+//			ps.setInt(3,Math.round(employee.getHourlyRate()));
+//			ps.setString(4,employee.getEmail());
+//			ps.execute();
+//
+//			query = "INSERT USER VALUE (?,?,?)";
+//			ps = con.prepareStatement(query);
+//			ps.setString(1,employee.getEmail());
+//			ps.setString(2,employee.getRole());
+//			ps.setString(3,employee.getPassword());
+//			ps.execute();
 
 			return "success";
 		} catch (ClassNotFoundException e) {
@@ -215,9 +216,10 @@ public class EmployeeDao {
 			Statement state = con.createStatement();
 			System.out.println(email);
 
-			int i = state.executeUpdate("DELETE User FROM User,Employee WHERE User.Email=Employee.Email");
+			int i = state.executeUpdate("DELETE User FROM User,Employee WHERE User.SSN =  "+employeeID);
 			int j = state.executeUpdate("DELETE FROM zhaowhuang.Employee WHERE SSN = "+employeeID);
 			int k = state.executeUpdate("DELETE FROM zhaowhuang.Person WHERE SSN = "+employeeID);
+			int l=state.executeUpdate("DELETE FROM zhaowhuang.Location WHERE SSN = "+employeeID);
 
 			if(i>0&&j>0&&k>0){
 				return "success";
@@ -250,7 +252,7 @@ public class EmployeeDao {
 
 		List<Employee> employees = new ArrayList<Employee>();
 
-		Location location = new Location();
+
 		//location.setCity("Stony Brook");
 	//	location.setState("NY");
 		//location.setZipCode(11790);
@@ -261,12 +263,15 @@ public class EmployeeDao {
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
 		//	Statement state = con.createStatement();
-			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN AND Person.ZipCode=Location.Zipcode";
+			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN AND Person.SSN=Location.SSN";
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
 
+
+
 			while (rs.next()){
 				Employee employee = new Employee();
+				Location location = new Location();
 				employee.setId(""+rs.getInt("SSN"));
 				employee.setEmail(""+rs.getString("Email"));
 				employee.setLastName(""+rs.getString("LastName"));
@@ -282,6 +287,7 @@ public class EmployeeDao {
 				employee.setTelephone(""+rs.getString("Telephone"));
 				employee.setEmployeeID(""+rs.getInt("SSN"));
 				employee.setHourlyRate(rs.getInt("HourlyRate"));
+				employee.setStartDate(rs.getDate("StartDate").toString());
 				employees.add(employee);
 
 			}
@@ -310,47 +316,60 @@ public class EmployeeDao {
 	}
 
 	public Employee getEmployee(String employeeID) {
-
+		Location location = new Location();
+		Employee temp = new Employee();
 		/*
 		 * The students code to fetch data from the database based on "employeeID" will be written here
 		 * employeeID, which is the Employee's ID who's details have to be fetched, is given as method parameter
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
 		try{
+
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
 
-			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN AND Person.ZipCode=Location.Zipcode";
+
+
+			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN  AND Location.SSN=Person.SSN AND Person.SSN="+employeeID;
+			//PreparedStatement ps = con.prepareStatement(query);
+		//	ps.setString(1,employeeID);
+		//	ps.execute();
+
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
 
-			while (rs.next()){
-				Employee employee = new Employee();
-				employee.setId(""+rs.getInt("SSN"));
-				employee.setEmail(""+rs.getString("Email"));
-				employee.setLastName(""+rs.getString("LastName"));
-				employee.setFirstName(""+rs.getString("FirstName"));
-				employee.setAddress(""+rs.getString("Address"));
-				location.setCity(""+rs.getString("City"));
-				location.setState(""+rs.getString("State"));
-				location.setZipCode(rs.getInt("Zipcode"));
-				employee.setLocation(location);
-				int a=rs.getInt("Zipcode");
-				employee.setZipcode(rs.getInt("Zipcode"));
+			while (rs.next()) {
 
-				employee.setTelephone(""+rs.getString("Telephone"));
-				employee.setEmployeeID(""+rs.getInt("SSN"));
-				employee.setHourlyRate(rs.getInt("HourlyRate"));
-				employees.add(employee);
+
+				temp.setEmail("" + rs.getString("Email"));
+				temp.setFirstName("" + rs.getString("FirstName"));
+				temp.setLastName("" + rs.getString("LastName"));
+
+				temp.setAddress(rs.getString("Address"));
+				System.out.println(temp.getAddress());
+				temp.setCity("" + rs.getString("City"));
+				temp.setState("" + rs.getString("State"));
+				temp.setZipcode(rs.getInt("Zipcode"));
+				location.setCity("" + rs.getString("City"));
+				location.setState("" + rs.getString("State"));
+				location.setZipCode(rs.getInt("Zipcode"));
+				temp.setLocation(location);
+				int a = rs.getInt("Zipcode");
+				temp.setZipcode(rs.getInt("Zipcode"));
+				temp.setTelephone(rs.getString("Telephone"));
+				temp.setEmployeeID("" + rs.getString("SSN"));
+				temp.setStartDate("" + rs.getString("StartDate"));
+				temp.setHourlyRate(rs.getInt("HourlyRate"));
 
 			}
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return getDummyEmployee();
+		return temp;
 	}
 	
 	public Employee getHighestRevenueEmployee() {

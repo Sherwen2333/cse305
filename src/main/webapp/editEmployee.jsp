@@ -1,6 +1,7 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Customer"%>
+<%@ page import="model.Employee"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -33,47 +34,47 @@
 	<form action="updateEmployee" method="POST">
 	  <div class="form-group">
 	    <label for="employeeEmail">Email address</label>
-	    <input type="email" class="form-control" id="employeeEmail" name="employeeEmail" placeholder="Enter email" value=${editEmployee.email} required>
+	    <input type="email" class="form-control" id="employeeEmail" name="employeeEmail" placeholder="Enter email" value="${editEmployee.email}" required>
 	  </div>
   	  <div class="form-group">
 	    <label for="employeeFirstName">First Name</label>
-	    <input type="text" class="form-control" id="employeeFirstName" name="employeeFirstName" placeholder="First Name" value=${editEmployee.firstName} required>
+	    <input type="text" class="form-control" id="employeeFirstName" name="employeeFirstName" placeholder="First Name" value="${editEmployee.firstName}" required>
 	  </div>
   	  <div class="form-group">
 	    <label for="employeeLastName">last Name</label>
-	    <input type="text" class="form-control" id="employeeLastName" name="employeeLastName" placeholder="Last Name" value=${editEmployee.lastName} required>
+	    <input type="text" class="form-control" id="employeeLastName" name="employeeLastName" placeholder="Last Name" value="${editEmployee.lastName}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeAddress">Address</label>
-	    <input type="text" class="form-control" id="employeeAddress" name="employeeAddress" placeholder="Address" value=${editEmployee.address} required>
+	    <input type="text" class="form-control" id="employeeAddress" name="employeeAddress" placeholder="Address" value="${editEmployee.address}"required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeCity">City</label>
-	    <input type="text" class="form-control" id="employeeCity" name="employeeCity" placeholder="City" value=${editEmployee.city} required>
+	    <input type="text" class="form-control" id="employeeCity" name="employeeCity" placeholder="City" value="${editEmployee.city}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeState">State</label>
-	    <input type="text" class="form-control" id="employeeState" name="employeeState" placeholder="State" value=${editEmployee.state} required>
+	    <input type="text" class="form-control" id="employeeState" name="employeeState" placeholder="State" value="${editEmployee.state}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeZipcode">Zipcode</label>
-	    <input type="text" class="form-control" id="employeeZipcode" name="employeeZipcode" placeholder="Zipcode" value=${editEmployee.zipcode} required>
+	    <input type="text" class="form-control" id="employeeZipcode" name="employeeZipcode" placeholder="Zipcode" value="${editEmployee.zipcode}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeTelephone">Telephone</label>
-	    <input type="text" class="form-control" id="employeeTelephone" name="employeeTelephone" placeholder="Telephone number" value=${editEmployee.telephone} required>
+	    <input type="text" class="form-control" id="employeeTelephone" name="employeeTelephone" placeholder="Telephone number" value="${editEmployee.telephone}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeSSN">SSN (Employee ID)</label>
-	    <input type="text" class="form-control" id="employeeSSN" name="employeeSSN" placeholder="XXX-XX-XXXX" value=${editEmployee.employeeID} readonly>
+	    <input type="text" class="form-control" id="employeeSSN" name="employeeSSN" placeholder="XXX-XX-XXXX" value="${editEmployee.employeeID}" readonly>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeStartDate">Start Date</label>
-	    <input type="text" class="form-control" id="employeeStartDate" name="employeeStartDate" placeholder="YYYY-MM-DD" value=${editEmployee.startDate} required>
+	    <input type="text" class="form-control" id="employeeStartDate" name="employeeStartDate" placeholder="YYYY-MM-DD" value="${editEmployee.startDate}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeHourlyRate">Hourly Rate</label>
-	    <input type="text" class="form-control" id="employeeHourlyRate" name="employeeHourlyRate" placeholder="Hourly Rate" value=${editEmployee.hourlyRate} required>
+	    <input type="text" class="form-control" id="employeeHourlyRate" name="employeeHourlyRate" placeholder="Hourly Rate" value="${editEmployee.hourlyRate}" required>
 	  </div>
 	  
 	  <button type="submit" class="btn btn-primary">Submit</button>
