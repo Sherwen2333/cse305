@@ -52,16 +52,19 @@ public class LoginController extends HttpServlet {
 				request.getSession(true).setAttribute("employeeID", employeeID);				
 				response.sendRedirect("managerHome.jsp");
 			}
-			else if(role.equals("Customer Representative")) {
+			else if(role.equals("Customer Representative")||role.equals("customerRepresentative")) {
 				EmployeeDao employeeDao = new EmployeeDao();
 				String employeeID = employeeDao.getEmployeeID(username);
-				request.getSession(true).setAttribute("employeeID", employeeID);				
+				System.out.println(employeeID+"333");
+				request.getSession().setAttribute("employeeID", employeeID);
 				response.sendRedirect("customerRepresentativeHome.jsp");
 			}
 			else {
+
 				CustomerDao customerDao = new CustomerDao();
 				String customerID = customerDao.getCustomerID(username);
-				request.getSession(true).setAttribute("customerID", customerID);
+
+				request.getSession().setAttribute("customerID", customerID);
 				response.sendRedirect("home.jsp");	
 			}
 

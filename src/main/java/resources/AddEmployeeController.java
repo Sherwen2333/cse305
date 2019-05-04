@@ -56,6 +56,9 @@ public class AddEmployeeController extends HttpServlet {
 		String startDate = request.getParameter("employeeStartDate");
 		float hourlyRate = Float.parseFloat(request.getParameter("employeeHourlyRate"));
 		String role=request.getParameter("role");
+		if (role.equals("customerRepresentative")){
+			role="Customer Representative";
+		}
 
 
 

@@ -78,6 +78,7 @@ public class AddCustomerController extends HttpServlet {
 		customer.setCreditCard(creditCard);
 		customer.setRating(rating);
 		customer.setRole("Customer");
+		customer.setPassword(password);
 		
 		CustomerDao customerDao = new CustomerDao();
 		String result = customerDao.addCustomer(customer);

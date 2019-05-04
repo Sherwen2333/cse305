@@ -48,13 +48,17 @@ public class AddOrderController extends HttpServlet {
 
         // submitted by customer
         if (customerId == null) {
-            customerId = (String) request.getSession(false).getAttribute("customerID");
+            customerId = (String) request.getSession().getAttribute("customerID");
+
         }
         else
         {
             EmployeeDao employeeDao = new EmployeeDao();
-            employeeId = (String) request.getSession(false).getAttribute("employeeID");
+            employeeId = (String) request.getSession().getAttribute("employeeID");
+          //  System.out.println(employeeId+"390");
             employee = employeeDao.getEmployee(employeeId);
+
+
         }
         String numShares = request.getParameter("orderNumShares");
         String type = request.getParameter("orderType");
