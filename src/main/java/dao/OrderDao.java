@@ -93,6 +93,8 @@ public class OrderDao {
         try{
             customer= new Customer();
             customer.setClientId("1232323");
+            employee= new Employee();
+            employee.setEmployeeID("213232");
             System.out.println(customer.getClientId());
             System.out.println(stock.getSymbol());
 //            customer.get
@@ -112,13 +114,13 @@ public class OrderDao {
             ps.setNull(2, Types.NULL);
             ps.setString(4,stock.getSymbol());
             ps.setInt(5,order.getNumShares());
+            ps.setDouble(11,stock.getPrice());
             Class a = order.getClass();
             if(a.getName().equals("model.MarketOrder")){
                 MarketOrder marketOrder= (MarketOrder)order;
                 ps.setString(3,"MarketOrder");
                 ps.setString(6,marketOrder.getBuySellType());
                 ps.setNull(7, Types.NULL);
-                ps.setNull(11, Types.NULL);
 
                 System.out.println(marketOrder.getBuySellType());
                 if(marketOrder.getBuySellType().equals("Sell")){
@@ -135,7 +137,6 @@ public class OrderDao {
                 ps.setString(3,"MarketOnCloseOrder");
                 ps.setString(6,marketOnCloseOrder.getBuySellType());
                 ps.setNull(7, Types.NULL);
-                ps.setNull(11, Types.NULL);
 
                 if(marketOrder.getBuySellType().equals("Sell")){
                     stockOperation(marketOrder,con,stock,customer,"-");
@@ -150,7 +151,6 @@ public class OrderDao {
                 ps.setString(3,"TrailingStopOrder");
                 ps.setNull(6, Types.NULL);
                 ps.setInt(7,(int) Math.round(trailingStopOrder.getPercentage()));
-                ps.setNull(11, Types.NULL);
             }else if(a.getName().equals("model.HiddenStopOrder")){
                 HiddenStopOrder hiddenStopOrder= (HiddenStopOrder)order;
                 ps.setString(3,"HiddenStopOrder");
@@ -163,7 +163,6 @@ public class OrderDao {
             ps.setDate(8,sqlDate);
             ps.setInt(9,Integer.parseInt(customer.getClientId()));
             ps.setDouble(10,stock.getPrice()*order.getNumShares()*0.05);
-//            ps.setInt(9,);
             ps.executeUpdate();
         }
         catch (Exception e){

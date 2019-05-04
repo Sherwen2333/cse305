@@ -135,7 +135,6 @@ public class StockDao {
 
     public String setStockPrice(String stockSymbol, double stockPrice) {
         try {
-            System.out.println("asdasdsdsad");
             //UPDATE Stock SET PricePerShare=20 WHERE StockSymbol='F'
 
             //  int i = state.executeUpdate("UPDATE zhaowhuang.Stock SET PricePerShare = "+stockPrice+"WHERE StockSymbol ="+stockSymbol);
@@ -171,8 +170,30 @@ public class StockDao {
 		 * The students code to fetch data from the database will be written here
 		 * Get list of bestseller stocks
 		 */
+		List<Stock> stocks= new ArrayList<Stock>();
+		try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query="SELECT Symbol,CompanyName,StockType,TotalSell,PricePerShare from StockSellRecord,Stock where StockSellRecord.Symbol=Stock.StockSymbol order by TotalSell desc";
 
-		return getDummyStocks();
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet resultSet= ps.executeQuery();
+            while (resultSet.next()){
+                Stock stock= new Stock();
+                stock.setSymbol(resultSet.getString("Symbol"));
+                stock.setName(resultSet.getString("CompanyName"));
+                stock.setType(resultSet.getString("StockType"));
+                stock.setPrice(resultSet.getDouble("PricePerShare"));
+                stock.setNumShares(resultSet.getInt("TotalSell"));
+                stocks.add(stock);
+            }
+
+        }
+		catch (Exception e){
+
+        }
+
+		return stocks;
 
 	}
 
@@ -248,9 +269,33 @@ public class StockDao {
 		 * The students code to fetch data from the database
 		 * Return list of stock objects, showing price history
 		 */
+        List<Stock> stocks= new ArrayList<Stock>();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+
+            //	Statement state = con.createStatement();
+            String query = "SELECT * from StockHistory where Symbol='"+stockSymbol+"'";
+            Statement state = con.createStatement();
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()){
+                Stock stock= new Stock();
+                stock.setPrice(rs.getDouble("Price"));
+                stock.setDate(rs.getTimestamp("Time").toString());
+                stock.setType(rs.getString("Type"));
+                stock.setName(rs.getString("Name"));
+                stock.setSymbol(rs.getString("Symbol"));
+                stocks.add(stock);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return stocks;
 
 
-        return getDummyStocks();
     }
 
     public List<String> getStockTypes() {

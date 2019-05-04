@@ -38,7 +38,7 @@ public class GetCustomerBestsellersController extends HttpServlet {
 
 		request.setAttribute("stocks", stocks);
 		request.setAttribute("heading", "Bestsellers for customer");
-		RequestDispatcher rd = request.getRequestDispatcher("showStocks.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("OverallBestSeller.jsp");
 		rd.forward(request, response);
 
 	}

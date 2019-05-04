@@ -14,7 +14,7 @@
                     <th>Symbol</th>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Number of Share</th>
+                    <th>Price Change Time</th>
                     <th>Price per share</th>
 
                 </tr>
@@ -25,7 +25,7 @@
                         <td>${cd.symbol}</td>
                         <td>${cd.name}</td>
                         <td>${cd.type}</td>
-                        <td>${cd.numShares}</td>
+                        <td>${cd.date}</td>
                         <td>${cd.price}</td>
                         <td></td>
                     </tr>
