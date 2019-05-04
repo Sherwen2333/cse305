@@ -294,23 +294,13 @@ public class EmployeeDao {
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
 		try{
-
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
-
-
-
 			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN  AND Location.SSN=Person.SSN AND Person.SSN="+employeeID;
-			//PreparedStatement ps = con.prepareStatement(query);
-		//	ps.setString(1,employeeID);
-		//	ps.execute();
-
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
-
 			while (rs.next()) {
-
 
 				temp.setEmail("" + rs.getString("Email"));
 				temp.setFirstName("" + rs.getString("FirstName"));
@@ -331,7 +321,6 @@ public class EmployeeDao {
 				temp.setId("" + rs.getString("SSN"));
 				temp.setStartDate("" + rs.getString("StartDate"));
 				temp.setHourlyRate(rs.getInt("HourlyRate"));
-
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -353,13 +342,35 @@ public class EmployeeDao {
 	}
 
 	public String getEmployeeID(String username) {
+    	String SSN=new String();
+
 		/*
 		 * The students code to fetch data from the database based on "username" will be written here
 		 * username, which is the Employee's email address who's Employee ID has to be fetched, is given as method parameter
 		 * The Employee ID is required to be returned as a String
 		 */
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
-		return "111-11-1111";
+			String query = "SELECT DISTINCT Employee.SSN FROM Employee WHERE Employee.Email="+username;
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery(query);
+			while (rs.next()) {
+
+				 SSN= rs.getString("Email");
+
+			System.out.println(SSN+"320");
+			}
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+		return "SSN";
 	}
 
 	public String SetStockPrice(Stock stock){
