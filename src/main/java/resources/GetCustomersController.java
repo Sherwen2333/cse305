@@ -42,8 +42,14 @@ public class GetCustomersController extends HttpServlet {
 		String searchKeyword = request.getParameter("searchKeyword");
 		
 		CustomerDao dao = new CustomerDao();
-		List<Customer> customers = dao.getCustomers(searchKeyword);
-		
+		List<Customer> customers ;
+
+
+		if ( searchKeyword==null){
+			customers = dao.getAllCustomers();
+		}else
+			 customers = dao.getCustomers(searchKeyword);
+
 		request.setAttribute("customers", customers);
 		request.setAttribute("heading", "Show customers");
 		RequestDispatcher rd = request.getRequestDispatcher("showCustomer.jsp");

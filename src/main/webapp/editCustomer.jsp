@@ -33,47 +33,47 @@
 	<form action="updateCustomer" method="POST">
 	  <div class="form-group">
 	    <label for="customerEmail">Email address</label>
-	    <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Enter email" value=${editCustomer.email} required>
+	    <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Enter email" value="${editCustomer.email}" required>
 	  </div>
   	  <div class="form-group">
 	    <label for="customerFirstName">First Name</label>
-	    <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" placeholder="First Name" value=${editCustomer.firstName} required>
+	    <input type="text" class="form-control" id="customerFirstName" name="customerFirstName" placeholder="First Name" value="${editCustomer.firstName}"required>
 	  </div>
   	  <div class="form-group">
 	    <label for="customerLastName">last Name</label>
-	    <input type="text" class="form-control" id="customerLastName" name="customerLastName" placeholder="Last Name" value=${editCustomer.lastName} required>
+	    <input type="text" class="form-control" id="customerLastName" name="customerLastName" placeholder="Last Name" value="${editCustomer.lastName}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerAddress">Address</label>
-	    <input type="text" class="form-control" id="customerAddress" name="customerAddress" placeholder="Address" value=${editCustomer.address} required>
+	    <input type="text" class="form-control" id="customerAddress" name="customerAddress" placeholder="Address" value="${editCustomer.address}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerCity">City</label>
-	    <input type="text" class="form-control" id="customerCity" name="customerCity" placeholder="City" value=${editCustomer.location.city} required>
+	    <input type="text" class="form-control" id="customerCity" name="customerCity" placeholder="City" value="${editCustomer.location.city}"required>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerState">State</label>
-	    <input type="text" class="form-control" id="customerState" name="customerState" placeholder="State" value=${editCustomer.location.state} required>
+	    <input type="text" class="form-control" id="customerState" name="customerState" placeholder="State" value="${editCustomer.location.state}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerZipcode">Zipcode</label>
-	    <input type="text" class="form-control" id="customerZipcode" name="customerZipcode" placeholder="Zipcode" value=${editCustomer.location.zipCode} required>
+	    <input type="text" class="form-control" id="customerZipcode" name="customerZipcode" placeholder="Zipcode" value="${editCustomer.location.zipCode}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerTelephone">Telephone</label>
-	    <input type="text" class="form-control" id="customerTelephone" name="customerTelephone" placeholder="Telephone number" value=${editCustomer.telephone} required>
+	    <input type="text" class="form-control" id="customerTelephone" name="customerTelephone" placeholder="Telephone number" value="${editCustomer.telephone}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerSSN">SSN (Customer ID)</label>
-	    <input type="text" class="form-control" id="customerSSN" name="customerSSN" placeholder="XXX-XX-XXXX" value=${editCustomer.id} readonly>
+	    <input type="text" class="form-control" id="customerSSN" name="customerSSN" placeholder="XXX-XX-XXXX" value="${editCustomer.id}" readonly>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerCreditCard">Credit Card Number</label>
-	    <input type="text" class="form-control" id="customerCreditCard" name="customerCreditCard" placeholder="YYYY-MM-DD" value=${editCustomer.creditCard} required>
+	    <input type="text" class="form-control" id="customerCreditCard" name="customerCreditCard" placeholder="YYYY-MM-DD" value="${editCustomer.creditCard}" required>
 	  </div>
    	  <div class="form-group">
 	    <label for="customerRating">Rating</label>
-	    <input type="text" class="form-control" id="customerRating" name="customerRating" placeholder="Hourly Rate" value=${editCustomer.rating} required>
+	    <input type="text" class="form-control" id="customerRating" name="customerRating" placeholder="Hourly Rate" value="${editCustomer.rating}" required>
 	  </div>
 	  
 	  <button type="submit" class="btn btn-primary">Submit</button>

@@ -15,14 +15,7 @@ public class EmployeeDao {
 		Employee employee=new Employee();
 
 		try{
-//		Class.forName("com.mysql.cj.jdbc.Driver");
-//			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-//			String query = "INSERT Location VALUE (?,?,?)";
-//			PreparedStatement ps = con.prepareStatement(query);
-//			ps.setInt(1,employee.getZipcode());
-//			ps.setString(2,employee.getCity());
-//			ps.setString(3,employee.getState());
-//			ps.execute();
+//
 		}
 		catch (Exception e){
 		e.printStackTrace();
@@ -35,29 +28,7 @@ public class EmployeeDao {
 	 * This class handles all the database operations related to the employee table
 	 */
 
-    public Employee getDummyEmployee()
-    {
-        Employee employee = new Employee();
 
-        Location location = new Location();
-        location.setCity("Stony Brook");
-        location.setState("NY");
-        location.setZipCode(11790);
-
-		/*Sample data begins*/
-        employee.setEmail("shiyong@cs.sunysb.edu");
-        employee.setFirstName("Shiyong");
-        employee.setLastName("Lu");
-        employee.setLocation(location);
-        employee.setAddress("123 Success Street");
-        employee.setStartDate("2006-10-17");
-        employee.setTelephone("5166328959");
-        employee.setEmployeeID("631-413-5555");
-        employee.setHourlyRate(100);
-		/*Sample data ends*/
-
-        return employee;
-    }
 
     public List<Employee> getDummyEmployees()
     {
@@ -157,37 +128,36 @@ public class EmployeeDao {
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-			String query = "UPDATE Location SET City=? AND State=? AND Zipcode=? WHERE SSN="+Integer.parseInt(employee.getSsn());
+			String query = "UPDATE Location SET  ZipCode=? , City=? ,State=? WHERE SSN="+Integer.parseInt(employee.getSsn());
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1,employee.getCity());
-			ps.setString(2,employee.getState());
-			ps.setInt(3,employee.getZipcode());
+			ps.setString(2,employee.getCity());
+			ps.setString(3,employee.getState());
+			ps.setInt(1,employee.getZipcode());
+			ps.execute();
+
+			query = "UPDATE Person SET LastName=? , FirstName=?, Address=?,Zipcode=? ,Telephone=? WHERE SSN="+Integer.parseInt(employee.getSsn());
+
+			ps = con.prepareStatement(query);
+
+			ps.setString(1,employee.getLastName());
+			ps.setString(2,employee.getFirstName());
+			ps.setString(3,employee.getAddress());
+			ps.setInt(4,employee.getZipcode());
+			ps.setString(5,employee.getTelephone());
+			ps.execute();
+
+			query = "UPDATE Employee SET StartDate=? , HourlyRate=? , Email=? WHERE SSN="+Integer.parseInt(employee.getSsn());;
+			ps = con.prepareStatement(query);
+			ps.setDate(1,Date.valueOf(employee.getStartDate()));
+			ps.setInt(2,Math.round(employee.getHourlyRate()));
+			ps.setString(3,employee.getEmail());
+			ps.execute();
+
+			query = "UPDATE User SET Email=?  WHERE SSN="+Integer.parseInt(employee.getSsn());;
+			ps = con.prepareStatement(query);
+			ps.setString(1,employee.getEmail());
 
 			ps.execute();
-	query = "UPDATE Person SET City=? AND State=? AND Zipcode=? WHERE SSN="+Integer.parseInt(employee.getSsn());
-//
-//			ps = con.prepareStatement(query);
-//			ps.setInt(1,Integer.parseInt(employee.getSsn()));
-//			ps.setString(2,employee.getLastName());
-//			ps.setString(3,employee.getFirstName());
-//			ps.setString(4,employee.getAddress());
-//			ps.setInt(5,employee.getZipcode());
-//			ps.setString(6,employee.getTelephone());
-//			ps.execute();
-//			query = "INSERT Employee VALUE (?,?,?,?)";
-//			ps = con.prepareStatement(query);
-//			ps.setInt(1,Integer.parseInt(employee.getSsn()));
-//			ps.setDate(2,Date.valueOf(employee.getStartDate()));
-//			ps.setInt(3,Math.round(employee.getHourlyRate()));
-//			ps.setString(4,employee.getEmail());
-//			ps.execute();
-//
-//			query = "INSERT USER VALUE (?,?,?)";
-//			ps = con.prepareStatement(query);
-//			ps.setString(1,employee.getEmail());
-//			ps.setString(2,employee.getRole());
-//			ps.setString(3,employee.getPassword());
-//			ps.execute();
 
 			return "success";
 		} catch (ClassNotFoundException e) {
@@ -214,14 +184,14 @@ public class EmployeeDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 			Statement state = con.createStatement();
-			System.out.println(email);
+
 
 			int i = state.executeUpdate("DELETE User FROM User,Employee WHERE User.SSN =  "+employeeID);
 			int j = state.executeUpdate("DELETE FROM zhaowhuang.Employee WHERE SSN = "+employeeID);
 			int k = state.executeUpdate("DELETE FROM zhaowhuang.Person WHERE SSN = "+employeeID);
 			int l=state.executeUpdate("DELETE FROM zhaowhuang.Location WHERE SSN = "+employeeID);
 
-			if(i>0&&j>0&&k>0){
+			if(i>0&&j>0&&k>0&&l>0){
 				return "success";
 			}
 			else{
@@ -347,7 +317,6 @@ public class EmployeeDao {
 				temp.setLastName("" + rs.getString("LastName"));
 
 				temp.setAddress(rs.getString("Address"));
-				System.out.println(temp.getAddress());
 				temp.setCity("" + rs.getString("City"));
 				temp.setState("" + rs.getString("State"));
 				temp.setZipcode(rs.getInt("Zipcode"));
@@ -359,6 +328,7 @@ public class EmployeeDao {
 				temp.setZipcode(rs.getInt("Zipcode"));
 				temp.setTelephone(rs.getString("Telephone"));
 				temp.setEmployeeID("" + rs.getString("SSN"));
+				temp.setId("" + rs.getString("SSN"));
 				temp.setStartDate("" + rs.getString("StartDate"));
 				temp.setHourlyRate(rs.getInt("HourlyRate"));
 
@@ -373,13 +343,13 @@ public class EmployeeDao {
 	}
 	
 	public Employee getHighestRevenueEmployee() {
-		
+		Employee temp=new Employee();
 		/*
 		 * The students code to fetch employee data who generated the highest revenue will be written here
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
 		
-		return getDummyEmployee();
+		return temp;
 	}
 
 	public String getEmployeeID(String username) {
@@ -393,11 +363,6 @@ public class EmployeeDao {
 	}
 
 	public String SetStockPrice(Stock stock){
-    	//	String sql1 = "INSERT INTO zhaowhuang.Person (SSN,LastName,FirstName,Address,ZipCode,Telephone) "+
-		//					"VALUES("+id+",\""+employee.getLastName()+"\",\""+employee.getFirstName()+"\",\""+address+"\","+Integer.valueOf(employee.getZipcode())+","+Long.parseLong(employee.getTelephone())+");";
-		//
-    	//String sql1="UPDATE  zhaowhuang.Stock"+"SET PricePerShare=="
-		//		+"WHERE
 
 
 		return "success";

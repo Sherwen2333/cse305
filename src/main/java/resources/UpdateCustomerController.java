@@ -57,6 +57,9 @@ public class UpdateCustomerController extends HttpServlet {
         location.setZipCode(zipcode);
 
         Customer customer = new Customer();
+		customer.setCity(city);
+		customer.setState(state);
+		customer.setZipcode(zipcode);
 		customer.setEmail(email);
 		customer.setFirstName(firstName);
 		customer.setLastName(lastName);

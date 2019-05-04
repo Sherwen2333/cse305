@@ -40,7 +40,7 @@ public class EditEmployeeController extends HttpServlet {
 
 		EmployeeDao employeeDao = new EmployeeDao();
 		Employee editEmployee = employeeDao.getEmployee(employeeID);
-		System.out.println(editEmployee.getAddress()+"2333");
+
 		request.getSession().setAttribute("editEmployee", editEmployee);
 		response.sendRedirect("editEmployee.jsp");
 
