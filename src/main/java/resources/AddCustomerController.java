@@ -67,12 +67,14 @@ public class AddCustomerController extends HttpServlet {
 		customer.setAddress(address);
 		customer.setCity(city);
 		customer.setState(state);
+
 		customer.setZipcode(zipcode);
 
 		customer.setLocation(location);
 		customer.setTelephone(telephone);
 		customer.setId(ssn);
 		customer.setSsn(ssn);
+		customer.setClientId(ssn);
 		customer.setCreditCard(creditCard);
 		customer.setRating(rating);
 		customer.setRole("Customer");

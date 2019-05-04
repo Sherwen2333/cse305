@@ -14,7 +14,7 @@ public class LoginDao {
 //        PreparedStatement ps = con.prepareStatement(query);
 //        ps.setString(1, "ak123@qq.com");
 //        ps.setString(2, "ak123");
-////        ps.setString(3, "Customer");
+//        ps.setString(3, "Customer");
 //        ResultSet rs = ps.executeQuery();
 //        if(rs.next()) {
 //            System.out.println(rs.getString("Role"));}}
@@ -36,39 +36,40 @@ public class LoginDao {
 		
 		/*Sample data begins*/
 		Login login = new Login();
-		login.setRole(role);
+		try{
+			if(role.equals("customerRepresentative")){
+				role="Customer Representative";
+			}
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+			String query = "SELECT * FROM zhaowhuang.User WHERE user.Email=? and user.role=? and user.Password=? ";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, username);
+			ps.setString(2,role);
+
+			ps.setString(3, password);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				System.out.println("dasjdlkasjdlaksdjlkasdjas");
+				login.setUsername(username);
+				login.setPassword(password);
+				login.setRole(role);
+
+			}else {
+				login = null;
+
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		return login;
-//		try{
-//			if(role.equals("customerRepresentative")){
-//				role="Customer Representative";
-//			}
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			Class.forName("com.mysql.jdbc.Driver");
-//			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-//			String query = "SELECT * FROM zhaowhuang.User WHERE user.Email=? and user.role=? and user.Password=? ";
-//			PreparedStatement ps = con.prepareStatement(query);
-//			ps.setString(1, username);
-//			ps.setString(2,role);
-//
-//			ps.setString(3, password);
-//			ResultSet rs = ps.executeQuery();
-//			if(rs.next()) {
-//				System.out.println("dasjdlkasjdlaksdjlkasdjas");
-//				login.setUsername(username);
-//				login.setPassword(password);
-//				login.setRole(role);
-//
-//			}else {
-//				login = null;
-//
-//			}
-//		}catch (Exception e){
-//            e.printStackTrace();
-//		}
-//		return login;
-//		/*Sample data ends*/
-//
+		/*Sample data ends*/
+
 	}
+		/*Sample data ends*/
+
+
 	
 	public String addUser(Login login) {
 		/*

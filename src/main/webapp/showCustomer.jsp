@@ -29,7 +29,7 @@
             <tbody>
             <c:forEach items="${customers}" var="cd">
                 <tr>
-                    <td>${cd.id}</td>
+                    <td>${cd.clientId}</td>
                     <td>${cd.firstName}</td>
                     <td>${cd.lastName}</td>
                     <td>${cd.address}</td>
@@ -43,7 +43,7 @@
                     <td>
                         <form method="POST" action="getStockSuggestions">
                             <div class="form-group">
-                                <input type="hidden" class="form-control" name="customerId" value=${cd.id}>
+                                <input type="hidden" class="form-control" name="customerId" value=${cd.clientId}>
                             </div>
                             <input type="submit" value="Suggestions" class="btn btn-success"/>
                         </form>
@@ -51,7 +51,7 @@
                     <td>
                         <form method="POST" action="editCustomer">
                             <div class="form-group">
-                                <input type="hidden" class="form-control" name="customerId" value=${cd.id}>
+                                <input type="hidden" class="form-control" name="customerId" value=${cd.clientId}>
                             </div>
                             <input type="submit" value="Edit" class="btn btn-success"/>
                         </form>
@@ -59,7 +59,7 @@
                     <td>
                         <form method="POST" action="deleteCustomer">
                             <div class="form-group">
-                                <input type="hidden" class="form-control" name="customerId" value=${cd.id}>
+                                <input type="hidden" class="form-control" name="customerId" value=${cd.clientId}>
                             </div>
                             <input type="submit" value="Delete" class="btn btn-success"/>
                         </form>
