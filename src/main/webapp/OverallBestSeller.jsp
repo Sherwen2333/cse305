@@ -14,7 +14,7 @@
                     <th>Symbol</th>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Number of Share</th>
+                    <th>Total Number of Share</th>
                     <th>Price per share</th>
 
                 </tr>

@@ -28,7 +28,7 @@ public class SalesDao {
         return items;
     }
     public List<RevenueItem> getSalesReport(String month, String year) {
-
+        System.out.println(month+year);
 		/*
 		 * The students code to fetch data from the database will be written here
 		 * Query to get sales report for a particular month and year

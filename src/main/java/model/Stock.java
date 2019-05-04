@@ -13,6 +13,15 @@ public class Stock {
 	private double price;
 	private int numShares;
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	private String date="2019-09-22";
 	public String getSymbol() {
 		return symbol;
 	}
