@@ -1,2 +1,2 @@
 # cse305\
-FK U ALL
+FK U ALL.
