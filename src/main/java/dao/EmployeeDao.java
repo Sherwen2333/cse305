@@ -11,19 +11,7 @@ import model.Stock;
 
 
 public class EmployeeDao {
-	public static void main(String[] args) {
-		Employee employee=new Employee();
 
-		try{
-//
-		}
-		catch (Exception e){
-		e.printStackTrace();
-		}
-
-
-
-	}
 	/*
 	 * This class handles all the database operations related to the employee table
 	 */
@@ -52,10 +40,7 @@ public class EmployeeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//        for(int i = 0; i < 10; i++)
-//        {
-//            employees.add(getDummyEmployee());
-//        }
+
 
         return employees;
     }
@@ -113,8 +98,6 @@ public class EmployeeDao {
 	}
 		return "failure";
 
-
-
 	}
 
 	public String editEmployee(Employee employee) {
@@ -168,10 +151,6 @@ public class EmployeeDao {
 		return "failure";
 
 
-		/*Sample data begins*/
-		//return "success";
-		/*Sample data ends*/
-
 	}
 
 	public String deleteEmployee(String employeeID,String email) {
@@ -205,9 +184,6 @@ public class EmployeeDao {
 		}
 		return "failure";
 
-		/*Sample data begins*/
-
-		/*Sample data ends*/
 
 	}
 
@@ -223,21 +199,13 @@ public class EmployeeDao {
 		List<Employee> employees = new ArrayList<Employee>();
 
 
-		//location.setCity("Stony Brook");
-	//	location.setState("NY");
-		//location.setZipCode(11790);
-
-
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
-		//	Statement state = con.createStatement();
 			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN AND Person.SSN=Location.SSN";
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
-
-
 
 			while (rs.next()){
 				Employee employee = new Employee();
@@ -266,21 +234,7 @@ public class EmployeeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		/*Sample data begins*/
-//		for (int i = 0; i < 10; i++) {
-//			Employee employee = new Employee();
-//			employee.setId("111-11-1111");
-//			employee.setEmail("shiyong@cs.sunysb.edu");
-//			employee.setFirstName("FUCKU");
-//			employee.setLastName("Lu");
-//			employee.setAddress("123 Success Street");
-//			employee.setLocation(location);
-//			employee.setTelephone("5166328959");
-//			employee.setEmployeeID("631-413-5555");
-//			employee.setHourlyRate(100);
-//			employees.add(employee);
-//		}
-		/*Sample data ends*/
+
 		
 		return employees;
 	}
@@ -294,23 +248,13 @@ public class EmployeeDao {
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
 		try{
-
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
-
-
-
 			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN  AND Location.SSN=Person.SSN AND Person.SSN="+employeeID;
-			//PreparedStatement ps = con.prepareStatement(query);
-		//	ps.setString(1,employeeID);
-		//	ps.execute();
-
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
-
 			while (rs.next()) {
-
 
 				temp.setEmail("" + rs.getString("Email"));
 				temp.setFirstName("" + rs.getString("FirstName"));
@@ -331,7 +275,6 @@ public class EmployeeDao {
 				temp.setId("" + rs.getString("SSN"));
 				temp.setStartDate("" + rs.getString("StartDate"));
 				temp.setHourlyRate(rs.getInt("HourlyRate"));
-
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -344,6 +287,7 @@ public class EmployeeDao {
 	
 	public Employee getHighestRevenueEmployee() {
 		Employee temp=new Employee();
+
 		/*
 		 * The students code to fetch employee data who generated the highest revenue will be written here
 		 * The record is required to be encapsulated as a "Employee" class object
@@ -353,13 +297,34 @@ public class EmployeeDao {
 	}
 
 	public String getEmployeeID(String username) {
+    	int SSN=0;
+
 		/*
 		 * The students code to fetch data from the database based on "username" will be written here
 		 * username, which is the Employee's email address who's Employee ID has to be fetched, is given as method parameter
 		 * The Employee ID is required to be returned as a String
 		 */
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+			String query = "SELECT DISTINCT User.SSN FROM User WHERE User.Email='"+username+"'";
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery(query);
+			while (rs.next()) {
 
-		return "111-11-1111";
+				 SSN= rs.getInt("SSN");
+
+
+			}
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		String result=Integer.toString(SSN);
+		return result;
 	}
 
 	public String SetStockPrice(Stock stock){

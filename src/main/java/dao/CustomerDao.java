@@ -1,8 +1,7 @@
 package dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import model.Customer;
 import model.Location;
@@ -51,14 +50,37 @@ public class CustomerDao {
 		/*
 		 * This method fetches one or more customers based on the searchKeyword and returns it as an ArrayList
 		 */
-		
+        List<Customer> CustomerList = new ArrayList<Customer>();
 
-		/*
+        try{
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+           // String query = "SELECT DISTINCT * FROM Person,Location,Clients WHERE Person.SSN=Clients.Id  AND Location.SSN=Person.SSN AND Person.SSN="+customerID;
+
+           // Statement state = con.createStatement();
+       //     ResultSet rs = state.executeQuery(query);
+
+       //     while (rs.next()) {
+
+       //     }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+        /*
 		 * The students code to fetch data from the database based on searchKeyword will be written here
 		 * Each record is required to be encapsulated as a "Customer" class object and added to the "customers" List
 		 */
 		
-		return getDummyCustomerList();
+		return CustomerList;
 	}
 
 
@@ -84,16 +106,13 @@ public class CustomerDao {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-
-
+          System.out.println(customerID+"3345");
             String query = "SELECT DISTINCT * FROM Person,Location,Clients WHERE Person.SSN=Clients.Id  AND Location.SSN=Person.SSN AND Person.SSN="+customerID;
 
             Statement state = con.createStatement();
             ResultSet rs = state.executeQuery(query);
 
             while (rs.next()) {
-
-
                 temp.setEmail("" + rs.getString("Email"));
                 temp.setFirstName("" + rs.getString("FirstName"));
                 temp.setLastName("" + rs.getString("LastName"));
@@ -115,7 +134,6 @@ public class CustomerDao {
                 temp.setId("" + rs.getString("SSN"));
                 temp.setCreditCard("" + rs.getString("CreditCardNumber"));
                 temp.setRating(rs.getInt("Rating"));
-
             }
 
         } catch (ClassNotFoundException e) {
@@ -125,16 +143,12 @@ public class CustomerDao {
         }
 
         return temp;
-
-
 		/*
 		 * This method fetches the customer details and returns it
 		 * customerID, which is the Customer's ID who's details have to be fetched, is given as method parameter
 		 * The students code to fetch data from the database will be written here
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
-
-
 	}
 	
 	public String deleteCustomer(String customerID) {
@@ -180,7 +194,7 @@ public class CustomerDao {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-			String query = "SELECT Id from Clients where Email=?";
+			String query = "SELECT User.SSN from User where Email=?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1,email);
 			ResultSet rs = ps.executeQuery();
@@ -203,7 +217,6 @@ public class CustomerDao {
 
 
 	public String addCustomer(Customer customer) {
-
 		/*
 		 * All the values of the add customer form are encapsulated in the customer object.
 		 * These can be accessed by getter methods (see Customer class in model package).
@@ -267,7 +280,6 @@ public class CustomerDao {
 		 * The sample code returns "success" by default.
 		 * You need to handle the database update and return "success" or "failure" based on result of the database update.
 		 */
-
         try{
 
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -319,7 +331,6 @@ public class CustomerDao {
     public List<Customer> getCustomerMailingList() {
 
         List<Customer> CustomerList = new ArrayList<Customer>();
-
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");

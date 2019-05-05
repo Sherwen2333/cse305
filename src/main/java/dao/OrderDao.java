@@ -82,10 +82,8 @@ public class OrderDao {
 
 		/*Sample data begins*/
         try{
-            customer= new Customer();
-            customer.setClientId("1232323");
-            employee= new Employee();
-            employee.setEmployeeID("213232");
+
+
             System.out.println(customer.getClientId());
             System.out.println(stock.getSymbol());
 //            customer.get
@@ -99,7 +97,8 @@ public class OrderDao {
                 ps.setNull(1, Types.NULL);
             }
             else {
-                ps.setInt(1,Integer.parseInt(employee.getEmployeeID()));
+
+                ps.setInt(1,Integer.parseInt(employee.getId()));
 
             }
             ps.setNull(2, Types.NULL);
@@ -290,7 +289,8 @@ public class OrderDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
             String query = "SELECT * from Orders where ClientID=?;";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,Integer.parseInt("1232323"));
+            System.out.println(customerId+"101");
+            ps.setInt(1,Integer.parseInt(customerId));
             ResultSet rs= ps.executeQuery();
             while (rs.next()){
                 if(rs.getString(3).equals("MarketOrder")){

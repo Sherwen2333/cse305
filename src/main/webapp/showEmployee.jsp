@@ -21,6 +21,7 @@
                 <th>Email</th>
                 <th>Start Date</th>
                 <th>Hourly Rate</th>
+                <th>Role</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -39,6 +40,7 @@
                     <td>${cd.email}</td>
                     <td>${cd.startDate}</td>
                     <td>${cd.hourlyRate}</td>
+                    <td>${cd.role}</td>
                     <td>
                         <form method="POST" action="editEmployee">
                             <div class="form-group">
