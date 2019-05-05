@@ -3,6 +3,7 @@
 <c:set var="heading" value="Home"/>
 <%@ include file="header.jsp" %>
 
+
 <div class="container">
     <h2>Customer Options:</h2>
     <%

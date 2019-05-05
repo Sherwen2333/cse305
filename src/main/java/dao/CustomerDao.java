@@ -5,6 +5,7 @@ import java.util.*;
 
 import model.Customer;
 import model.Location;
+import model.Order;
 
 public class CustomerDao {
 	/*
@@ -85,13 +86,34 @@ public class CustomerDao {
 
 
 	public Customer getHighestRevenueCustomer() {
+	    Customer temp=new Customer();
 		/*
 		 * This method fetches the customer who generated the highest total revenue and returns it
 		 * The students code to fetch data from the database will be written here
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
+        try{
 
-		return getDummyCustomer();
+            Order order=new Order();
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query = "SELECT DISTINCT revbuy2.Customer FROM RevBuy2,RevSell ORDER BY (revbuy2.Money-revsell.Money) desc LIMIT 1" ;
+
+            Statement state = con.createStatement();
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+
+                temp=getCustomer(rs.getString("Customer"));
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+		return temp;
 	}
 
 	public Customer getCustomer(String customerID) {
@@ -106,7 +128,6 @@ public class CustomerDao {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-          System.out.println(customerID+"3345");
             String query = "SELECT DISTINCT * FROM Person,Location,Clients WHERE Person.SSN=Clients.Id  AND Location.SSN=Person.SSN AND Person.SSN="+customerID;
 
             Statement state = con.createStatement();
