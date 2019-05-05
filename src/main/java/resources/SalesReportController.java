@@ -37,7 +37,6 @@ public class SalesReportController extends HttpServlet {
         String month = request.getParameter("month");
         String year = request.getParameter("year");
         List<RevenueItem> items = dao.getSalesReport(month, year);
-
         request.setAttribute("heading", "Sales Report for " + month + "/" + year);
         request.setAttribute("items", items);
 		RequestDispatcher rd = request.getRequestDispatcher("showSalesReport.jsp");

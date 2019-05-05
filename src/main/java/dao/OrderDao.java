@@ -1,7 +1,5 @@
 package dao;
 
-import com.mysql.cj.protocol.Resultset;
-import com.sun.tools.corba.se.idl.constExpr.Or;
 import model.*;
 
 import java.sql.*;
@@ -11,13 +9,6 @@ import java.util.List;
 
 public class OrderDao {
     public static void main(String[] args) {
-//        Order order= new Order();
-//        Class a = order.getClass();
-//        System.out.println(a.getName());
-//        TrailingStopOrder trailingStopOrder= new TrailingStopOrder();
-//        a = trailingStopOrder.getClass();
-//        System.out.println(a.getName());
-        System.out.println("asds"+2);
     }
 
     public Order getDummyTrailingStopOrder() {
@@ -230,13 +221,66 @@ public class OrderDao {
     }
 
     public List<Order> getOrderByCustomerName(String customerName) {
+        String last=customerName.split(" ")[1];
+        String first=customerName.split(" ")[0];
+        System.out.println(last);
+        System.out.println(first);
         List<Order> orders= new ArrayList<Order>();
-        Order order= new Order();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query = "SELECT Orders.* from Orders,Person where LastName =? and FirstName=?;\n";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1,last);
+            ps.setString(2,first);
+            ResultSet rs= ps.executeQuery();
+            while (rs.next()){
+                if(rs.getString(3).equals("MarketOrder")){
+                    MarketOrder marketOrder= new MarketOrder();
+                    marketOrder.setBuySellType(rs.getString(6));
+                    marketOrder.setId(rs.getInt(2));
+                    marketOrder.setDatetime(rs.getDate("Time"));
+                    marketOrder.setNumShares(rs.getInt("NumberOfShare"));
+                    orders.add(marketOrder);
+                }
+                if(rs.getString(3).equals("MarketOnCloseOrder")){
+                    MarketOnCloseOrder onCloseOrder= new MarketOnCloseOrder();
+                    onCloseOrder.setBuySellType(rs.getString("buy_sell"));
+                    onCloseOrder.setId(rs.getInt(2));
+                    onCloseOrder.setDatetime(rs.getDate("Time"));
+                    onCloseOrder.setNumShares(rs.getInt("NumberOfShare"));
+                    orders.add(onCloseOrder);
+                }
+                if(rs.getString(3).equals("HiddenStopOrder")){
+                    HiddenStopOrder hiddenStopOrder= new HiddenStopOrder();
+                    hiddenStopOrder.setPricePerShare(rs.getDouble("PricePerShare"));
+                    hiddenStopOrder.setId(rs.getInt(2));
+                    hiddenStopOrder.setDatetime(rs.getDate("Time"));
+                    hiddenStopOrder.setNumShares(rs.getInt("NumberOfShare"));
+                    orders.add(hiddenStopOrder);
 
-         /*
-		 * Student code to get orders by customer name
+                }
+                if(rs.getString(3).equals("TrailingStopOrder")){
+                    TrailingStopOrder trailingStopOrder= new TrailingStopOrder();
+                    trailingStopOrder.setPercentage(rs.getDouble("Percentage"));
+                    trailingStopOrder.setId(rs.getInt(2));
+                    trailingStopOrder.setDatetime(rs.getDate("Time"));
+                    trailingStopOrder.setNumShares(rs.getInt("NumberOfShare"));
+                    orders.add(trailingStopOrder);
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        /*
+         * The students code to fetch data from the database will be written here
+         * Show orders for given customerId
          */
-        return getDummyOrders();
+
+
+        return orders;
     }
 
     public List<Order> getOrderHistory(String customerId) {
@@ -304,15 +348,21 @@ public class OrderDao {
 		 * Use setPrice to show hidden-stop price and trailing-stop price
 		 */
         List<OrderPriceEntry> orderPriceHistory = new ArrayList<OrderPriceEntry>();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query = "SELECT OrderType from Orders where OrderId="+Integer.parseInt(orderId);
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                if(rs.getString(1).equals("HiddenStopOrder")){
+                    String query1="SELECT HiddenStopOrder.* from HiddenStopOrder where HiddenStopOrder.TradeId =31";
+                }
+            }
+        }
 
-        for (int i = 0; i < 10; i++) {
-            OrderPriceEntry entry = new OrderPriceEntry();
-            entry.setOrderId(orderId);
-            entry.setDate(new Date());
-            entry.setStockSymbol("FUCK");
-            entry.setPricePerShare(150.0);
-            entry.setPrice(100.0);
-            orderPriceHistory.add(entry);
+        catch (Exception e){
+
         }
         return orderPriceHistory;
     }
@@ -324,7 +374,6 @@ public class OrderDao {
             ps.setInt(2,Integer.parseInt(customer.getClientId()));
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
-                System.out.println("asdasd");
             int ClientId=Integer.parseInt(customer.getClientId());
             String StockSymbol=stock.getSymbol();
             int SellNumber=order.getNumShares();

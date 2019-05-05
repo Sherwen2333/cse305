@@ -203,19 +203,66 @@ public class StockDao {
 		 * The students code to fetch data from the database will be written here.
 		 * Get list of customer bestseller stocks
 		 */
+        List<Stock> stocks= new ArrayList<Stock>();
+        System.out.println();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query="SELECT Stock.StockSymbol,Stock.CompanyName,Stock.StockType,StockHold.NumShare,Stock.PricePerShare from StockHold ,Stock where ClientID=? and Stock.StockSymbol=StockHold.StockSymbol order by StockHold.NumShare desc;";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1,1232323);
+            ResultSet resultSet= ps.executeQuery();
+            while (resultSet.next()){
+                Stock stock= new Stock();
+                stock.setSymbol(resultSet.getString("StockSymbol"));
+                stock.setName(resultSet.getString("CompanyName"));
+                stock.setType(resultSet.getString("StockType"));
+                stock.setPrice(resultSet.getDouble("PricePerShare"));
+                stock.setNumShares(resultSet.getInt("NumShare"));
+                stocks.add(stock);
+            }
 
-        return getDummyStocks();
+        }
+        catch (Exception e){
+                e.printStackTrace();
+        }
+
+        return stocks;
 
     }
 
 	public List getStocksByCustomer(String customerId) {
 
+        List<Stock> stocks= new ArrayList<Stock>();
+        System.out.println();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+            String query="SELECT Stock.StockSymbol,Stock.CompanyName,Stock.StockType,StockHold.NumShare,Stock.PricePerShare from StockHold ,Stock where ClientID=? and Stock.StockSymbol=StockHold.StockSymbol order by Stock.PricePerShare;";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1,1232323);
+            ResultSet resultSet= ps.executeQuery();
+            while (resultSet.next()){
+                Stock stock= new Stock();
+                stock.setSymbol(resultSet.getString("StockSymbol"));
+                stock.setName(resultSet.getString("CompanyName"));
+                stock.setType(resultSet.getString("StockType"));
+                stock.setPrice(resultSet.getDouble("PricePerShare"));
+                stock.setNumShares(resultSet.getInt("NumShare"));
+                stocks.add(stock);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return stocks;
 		/*
 		 * The students code to fetch data from the database will be written here
 		 * Get stockHoldings of customer with customerId
 		 */
 
-		return getDummyStocks();
 	}
 
     public List<Stock> getStocksByName(String name) {
