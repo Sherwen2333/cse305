@@ -12,25 +12,6 @@ import model.RevenueItem;
 
 public class SalesDao {
 
-    private List<RevenueItem> getDummyRevenueItems()
-    {
-        List<RevenueItem> items = new ArrayList<RevenueItem>();
-
-		/*Sample data begins*/
-        for (int i = 0; i < 10; i++) {
-            RevenueItem item = new RevenueItem();
-            item.setDate(new Date());
-            item.setNumShares(5);
-            item.setAccountId("foo");
-            item.setPricePerShare(50.0);
-            item.setStockSymbol("AAPL");
-            item.setAmount(150.0);
-            items.add(item);
-        }
-        /*Sample data ends*/
-
-        return items;
-    }
     public List<RevenueItem> getSalesReport(String month, String year) {
         List<RevenueItem> revenueItems= new ArrayList<RevenueItem>();
         try{

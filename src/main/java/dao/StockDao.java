@@ -15,18 +15,13 @@ import javax.rmi.CORBA.Util;
 
 public class StockDao {
 
-    public Stock getDummyStock() {
-        Stock stock = new Stock();
-        stock.setName("Apple");
-        stock.setSymbol("AAPL");
-        stock.setPrice(150.0);
-        stock.setNumShares(1200);
-        stock.setType("Technology");
+    public List<Stock> getActivelyTradedStocks() {
 
-        return stock;
-    }
-
-    public List<Stock> getDummyStocks() {
+		/*
+		 * The students code to fetch data from the database will be written here
+		 * Query to fetch details of all the stocks has to be implemented
+		 * Return list of actively traded stocks
+		 */
         List<Stock> stocks = new ArrayList<Stock>();
 
         try{
@@ -34,18 +29,17 @@ public class StockDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
             //	Statement state = con.createStatement();
-            String query = "SELECT DISTINCT * FROM STOCK";
+            String query = "SELECT Stock.* from Stock,ActivelyStock where ActivelyStock.StockSymbol=Stock.StockSymbol order by ActivelyStock.Time desc";
             Statement state = con.createStatement();
             ResultSet rs = state.executeQuery(query);
-
             while (rs.next()){
-        Stock stock=new Stock();
-      stock.setSymbol(""+rs.getString("StockSymbol"));
-        stock.setName(""+rs.getString("CompanyName"));
-        stock.setType(""+rs.getString("StockType"));
-        stock.setNumShares(rs.getInt("NumShares"));
-        stock.setPrice(rs.getInt("PricePerShare"));
-        stocks.add(stock);
+                Stock stock=new Stock();
+                stock.setSymbol(""+rs.getString("StockSymbol"));
+                stock.setName(""+rs.getString("CompanyName"));
+                stock.setType(""+rs.getString("StockType"));
+                stock.setNumShares(rs.getInt("NumShares"));
+                stock.setPrice(rs.getInt("PricePerShare"));
+                stocks.add(stock);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -54,17 +48,6 @@ public class StockDao {
         }
 
         return stocks;
-    }
-
-    public List<Stock> getActivelyTradedStocks() {
-
-		/*
-		 * The students code to fetch data from the database will be written here
-		 * Query to fetch details of all the stocks has to be implemented
-		 * Return list of actively traded stocks
-		 */
-
-        return getDummyStocks();
 
     }
 
@@ -210,7 +193,7 @@ public class StockDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
             String query="SELECT Stock.StockSymbol,Stock.CompanyName,Stock.StockType,StockHold.NumShare,Stock.PricePerShare from StockHold ,Stock where ClientID=? and Stock.StockSymbol=StockHold.StockSymbol order by StockHold.NumShare desc;";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,1232323);
+            ps.setInt(1,Integer.parseInt(customerID));
             ResultSet resultSet= ps.executeQuery();
             while (resultSet.next()){
                 Stock stock= new Stock();
@@ -240,7 +223,7 @@ public class StockDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
             String query="SELECT Stock.StockSymbol,Stock.CompanyName,Stock.StockType,StockHold.NumShare,Stock.PricePerShare from StockHold ,Stock where ClientID=? and Stock.StockSymbol=StockHold.StockSymbol order by Stock.PricePerShare;";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,1232323);
+            ps.setInt(1,Integer.parseInt(customerId));
             ResultSet resultSet= ps.executeQuery();
             while (resultSet.next()){
                 Stock stock= new Stock();
@@ -305,8 +288,32 @@ public class StockDao {
 		 * The students code to fetch data from the database will be written here
 		 * Return stock suggestions for given "customerId"
 		 */
+        List<Stock> stocks= new ArrayList<Stock>();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
-        return getDummyStocks();
+            //	Statement state = con.createStatement();
+            String query = "SELECT Stock.* from Stock where StockSymbol not in (SELECT StockHold.StockSymbol from StockHold where StockHold.ClientID="+Integer.parseInt(customerID)+") order by PricePerShare";
+            Statement state = con.createStatement();
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()){
+                Stock stock= new Stock();
+                stock.setPrice(rs.getDouble("Price"));
+                stock.setDate(rs.getTimestamp("Time").toString());
+                stock.setType(rs.getString("Type"));
+                stock.setName(rs.getString("Name"));
+                stock.setSymbol(rs.getString("Symbol"));
+                stocks.add(stock);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return stocks;
+
 
     }
 

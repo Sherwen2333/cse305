@@ -11,67 +11,6 @@ public class OrderDao {
     public static void main(String[] args) {
     }
 
-    public Order getDummyTrailingStopOrder() {
-        TrailingStopOrder order = new TrailingStopOrder();
-
-        order.setId(1);
-        order.setDatetime(new Date());
-        order.setNumShares(5);
-        order.setPercentage(12.0);
-        return order;
-    }
-
-    public Order getDummyMarketOrder() {
-        MarketOrder order = new MarketOrder();
-
-        order.setId(1);
-        order.setDatetime(new Date());
-        order.setNumShares(5);
-        order.setBuySellType("buy");
-        return order;
-    }
-
-    public Order getDummyMarketOnCloseOrder() {
-        MarketOnCloseOrder order = new MarketOnCloseOrder();
-
-        order.setId(1);
-        order.setDatetime(new Date());
-        order.setNumShares(5);
-        order.setBuySellType("buy");
-        return order;
-    }
-
-    public Order getDummyHiddenStopOrder() {
-        HiddenStopOrder order = new HiddenStopOrder();
-
-        order.setId(1);
-        order.setDatetime(new Date());
-        order.setNumShares(5);
-        order.setPricePerShare(145.0);
-        return order;
-    }
-
-    public List<Order> getDummyOrders() {
-        List<Order> orders = new ArrayList<Order>();
-
-        for (int i = 0; i < 3; i++) {
-            orders.add(getDummyTrailingStopOrder());
-        }
-
-        for (int i = 0; i < 3; i++) {
-            orders.add(getDummyMarketOrder());
-        }
-
-        for (int i = 0; i < 3; i++) {
-            orders.add(getDummyMarketOnCloseOrder());
-        }
-
-        for (int i = 0; i < 3; i++) {
-            orders.add(getDummyHiddenStopOrder());
-        }
-
-        return orders;
-    }
 
     public String submitOrder(Order order, Customer customer, Employee employee, Stock stock) {
 
@@ -354,15 +293,29 @@ public class OrderDao {
             String query = "SELECT OrderType from Orders where OrderId="+Integer.parseInt(orderId);
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                if(rs.getString(1).equals("HiddenStopOrder")){
-                    String query1="SELECT HiddenStopOrder.* from HiddenStopOrder where HiddenStopOrder.TradeId =31";
+            if(rs.next()) {
+                String query1 = "";
+                if (rs.getString(1).equals("HiddenStopOrder")) {
+                    query1 = "SELECT HiddenStopOrder.*,StockSymbol from HiddenStopOrder,Orders where HiddenStopOrder.TradeId =Orders.OrderId and Orders.OrderId=" + Integer.parseInt(orderId);
+                } else {
+                    query1 = "SELECT TrailingStopOrder.*,StockSymbol from TrailingStopOrder,Orders where TrailingStopOrder.TradeId =Orders.OrderId and Orders.OrderId=" + Integer.parseInt(orderId);
                 }
+                    ps=con.prepareStatement(query1);
+                    rs=ps.executeQuery();
+                    while (rs.next()){
+                        OrderPriceEntry orderPriceEntry= new OrderPriceEntry();
+                        orderPriceEntry.setDate(rs.getDate("Date"));
+                        orderPriceEntry.setOrderId(""+rs.getInt("OrderId"));
+                        orderPriceEntry.setPrice(rs.getDouble("Price"));
+                        orderPriceEntry.setStockSymbol(rs.getString("StockSymbol"));
+                        orderPriceEntry.setPricePerShare(rs.getDouble("PricePerShare"));
+                        orderPriceHistory.add(orderPriceEntry);
+                    }
             }
         }
 
         catch (Exception e){
-
+            e.printStackTrace();
         }
         return orderPriceHistory;
     }
