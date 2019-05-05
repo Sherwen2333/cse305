@@ -2,10 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="heading" value="Home"/>
 <%@ include file="header.jsp" %>
+<style type="text/css">
+    body{
+        background-image:url("img/pic.jpeg");
 
-
+    }
+</style>
 <div class="container">
-    <h2>Customer Options:</h2>
+    <h2 style="color: azure;">Customer Options:</h2>
     <%
         String email = (String)session.getAttribute("email");
         String role = (String)session.getAttribute("role");
@@ -31,10 +35,12 @@
             <h5 class="card-title">Orders</h5>
             <div class="container">
                 <form action="viewAddOrder">
+                    <img src="img/placeOrder.png"  width="70" height="70">
                     <input type="submit" value="Place Order" class="btn btn-success"/>
                 </form>
 
                 <form action="getOrdersByCustomer" class="pt-1">
+                    <img src="img/orderHistory.png"  width="60" height="60">
                     <input type="submit" value="Order History" class="btn btn-success"/>
                 </form>
             </div>
@@ -47,18 +53,23 @@
             <h5 class="card-title">Stocks</h5>
             <div class="container">
                 <form action="getStocksByCustomer">
+                    <img src="img/holding.png"  width="60" height="60">
                     <input type="submit" value="Current stock holdings" class="btn btn-success"/>
                 </form>
                 <form action="viewGetStockPriceHistory" class="pt-1">
+                    <img src="img/price.jpg"  width="60" height="60">
                     <input type="submit" value="Stock price history" class="btn btn-success"/>
                 </form>
                 <form action="viewSearchStocks" class="pt-1">
+                    <img src="img/search.png"  width="60" height="60">
                     <input type="submit" value="Search stocks" class="btn btn-success"/>
                 </form>
                 <form action="getCustomerBestsellers" class="pt-1">
+                    <img src="img/bestSeller.jpg"  width="60" height="60">
                     <input type="submit" value="View bestseller stocks" class="btn btn-success"/>
                 </form>
                 <form action="getStockSuggestions" class="pt-1">
+                    <img src="img/recomend.png"  width="60" height="60">
                     <input type="submit" value="View suggested stocks" class="btn btn-success"/>
                 </form>
             </div>
