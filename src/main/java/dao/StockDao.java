@@ -299,11 +299,11 @@ public class StockDao {
             ResultSet rs = state.executeQuery(query);
             while (rs.next()){
                 Stock stock= new Stock();
-                stock.setPrice(rs.getDouble("Price"));
-                stock.setDate(rs.getTimestamp("Time").toString());
-                stock.setType(rs.getString("Type"));
-                stock.setName(rs.getString("Name"));
-                stock.setSymbol(rs.getString("Symbol"));
+                stock.setPrice(rs.getDouble("PricePerShare"));
+                stock.setNumShares(rs.getInt("NumShares"));
+                stock.setType(rs.getString("StockType"));
+                stock.setName(rs.getString("CompanyName"));
+                stock.setSymbol(rs.getString("StockSymbol"));
                 stocks.add(stock);
             }
         } catch (ClassNotFoundException e) {

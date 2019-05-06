@@ -77,13 +77,13 @@
 	    <input type="text" class="form-control" id="employeeHourlyRate" name="employeeHourlyRate" placeholder="Hourly Rate" value="${editEmployee.hourlyRate}" required>
 	  </div>
 	  
-	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="submit" class="btn btn-danger">Submit</button>
 	</form>
 	</c:if>
 	</div>
 	<div class="container pt-1">
 		<form action="home.jsp">
-			<input type="submit" value="Home" class="btn btn-success"/>
+			<input type="submit" value="Home" class="btn btn-danger"/>
 		</form>
 	</div>
 

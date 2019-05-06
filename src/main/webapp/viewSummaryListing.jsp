@@ -8,7 +8,7 @@
     <form action="getSummaryListing">
         <input type="text" name="searchKeyword" placeholder="Item Name or Item Type or Customer Name"
                class="form-control"/>
-        <input type="submit" value="Search" class="btn btn-success"/>
+        <input type="submit" value="Search" class="btn btn-danger"/>
     </form>
 </div>
 <%@ include file="footer.jsp" %>

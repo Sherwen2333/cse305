@@ -30,7 +30,7 @@
                 </c:forEach>
             </select>
         </div>
-        <input type="submit" value="Search" class="btn btn-success"/>
+        <input type="submit" value="Search" class="btn btn-danger"/>
     </form>
 </div>
 <%@ include file="footer.jsp" %>

@@ -37,14 +37,14 @@
                                 <strong>Percentage: </strong>${cd.percentage}
                                 <form method="post" action="getOrderPriceHistory">
                                 <input type="hidden" name="orderId" value="${cd.id}" />
-                                    <input type="submit" value="price history" class="btn btn-success"/>
+                                    <input type="submit" value="price history" class="btn btn-danger"/>
                                 </form>
                             </c:when>
                             <c:when test="${cd.getClass().getSimpleName() == 'HiddenStopOrder'}">
                                 <strong>PricePerShare: </strong>${cd.pricePerShare}
                                 <form method="post" action="getOrderPriceHistory">
                                 <input type="hidden" name="orderId" value="${cd.id}" />
-                                <input type="submit" value="price history" class="btn btn-success"/>
+                                <input type="submit" value="price history" class="btn btn-danger"/>
                                 </form>
                             </c:when>
                         </c:choose>

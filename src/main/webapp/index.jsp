@@ -8,6 +8,7 @@
 	}
 </style>
 <body>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="login.css" rel="stylesheet" />
 <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
 <div class="loginBlock">
@@ -15,7 +16,7 @@
 			<%
 				String email = (String)session.getAttribute("email");
 				String role = (String)session.getAttribute("role");
-				
+
 				//redirect to home page if already logged in
 				if(email != null) {
 
@@ -26,10 +27,10 @@
 						response.sendRedirect("customerRepresentativeHome.jsp");
 					}
 					else {
-						response.sendRedirect("home.jsp");	
+						response.sendRedirect("home.jsp");
 					}
 				}
-				
+
 				String status = request.getParameter("status");
 				if(status != null) {
 					if(status.equals("false")) {
@@ -57,7 +58,7 @@
                         <option value="customerRepresentative">Customer Representative</option>
 					</select>
 				</div>
-				<input type="submit" value="Login" class="btn btn-success"/>
+				<input type="submit" value="Login" class="btn btn-danger"/>
 			</form>
 		</div>
 

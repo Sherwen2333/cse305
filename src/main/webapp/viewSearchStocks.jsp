@@ -20,7 +20,7 @@
                                         <option value="${cd}"> <c:out value = "${cd}"/></option>
                                     </c:forEach>
                                 </select>
-                                <input type="submit" value="Search" class="btn btn-primary"/>
+                                <input type="submit" value="Search" class="btn btn-danger"/>
                             </form>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         <form method="POST" action="getStocksByName">
                             <label for="itemName">Stock Name:</label>
                             <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Apple">
-                            <input type="submit" value="Search" class="btn btn-primary"/>
+                            <input type="submit" value="Search" class="btn btn-danger"/>
                         </form>
                     </div>
                 </div>

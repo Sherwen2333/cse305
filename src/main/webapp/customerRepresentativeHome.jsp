@@ -11,6 +11,9 @@
     body{
         background-image:url("img/pic.jpeg");
     }
+    .card-body{
+        background-color: #f9d4d4;
+    }
 </style>
 <div class="container">
     <h2 style="color: azure;">Customer Representative Options:</h2>
@@ -41,7 +44,7 @@
                 <div class="container">
                     <form action="viewAddCustomerOrder">
                         <img src="img/search.png"  width="60" height="60">
-                        <input type="submit" value="Record order" class="btn btn-success"/>
+                        <input type="submit" value="Record order" class="btn btn-danger"/>
                     </form>
                 </div>
               </div>
@@ -54,11 +57,11 @@
                 <div class="container">
                     <form action="viewAddCustomer.jsp">
                         <img src="img/addEmployee.png"  width="60" height="60">
-                        <input type="submit" value="Add Customer" class="btn btn-primary"/>
+                        <input type="submit" value="Add Customer" class="btn btn-danger"/>
                     </form>
                     <form action="getCustomers" class="pt-1">
                         <img src="img/deleteEmployee.png"  width="60" height="60">
-                        <input type="submit" value="Edit Customer" class="btn btn-primary"/>
+                        <input type="submit" value="Edit Customer" class="btn btn-danger"/>
                     </form>
 
                 </div>
@@ -72,12 +75,12 @@
                 <div class="container">
                     <form action="getCustomerMailingList">
                         <img src="img/mail.png"  width="60" height="60">
-                        <input type="submit" value="Customer Mailing List" class="btn btn-primary"/>
+                        <input type="submit" value="Customer Mailing List" class="btn btn-danger"/>
                     </form>
 
                     <form action="viewCustomerStockSuggestions" class="pt-1">
                         <img src="img/suggestion.png"  width="60" height="60">
-                        <input type="submit" value="View Suggestions" class="btn btn-success"/>
+                        <input type="submit" value="View Suggestions" class="btn btn-danger"/>
                     </form>
                 </div>
               </div>

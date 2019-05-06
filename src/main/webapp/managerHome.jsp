@@ -6,6 +6,9 @@
     body{
         background-image:url("img/pic.jpeg");
     }
+    .card-body{
+        background-color: #f9d4d4;
+    }
 </style>
 <div class="container">
     <h2 style="color: azure;">Manager Options:</h2>
@@ -35,12 +38,12 @@
                     <div class="container">
                         <form action="viewAddEmployee.jsp">
                             <img src="img/addEmployee.png"  width="60" height="60">
-                            <input type="submit" value="Add Employee" class="btn btn-primary"/>
+                            <input type="submit" value="Add Employee" class="btn btn-danger"/>
                         </form>
 
                         <form action="getEmployees" class="pt-1">
                             <img src="img/deleteEmployee.png"  width="60" height="60">
-                            <input type="submit" value="Edit Employee" class="btn btn-primary"/>
+                            <input type="submit" value="Edit Employee" class="btn btn-danger"/>
                         </form>
 
                     </div>
@@ -54,23 +57,23 @@
                     <div class="container">
                         <form action="viewSalesReport.jsp">
                             <img src="img/saleReport.jpg"  width="60" height="60">
-                            <input type="submit" value="View sales report" class="btn btn-primary"/>
+                            <input type="submit" value="View sales report" class="btn btn-danger"/>
                         </form>
                         <form action="viewSummaryListing.jsp" class="pt-1">
                             <img src="img/revenueReport.jpg"  width="60" height="60">
-                            <input type="submit" value="View Revenue Summary" class="btn btn-primary"/>
+                            <input type="submit" value="View Revenue Summary" class="btn btn-danger"/>
                         </form>
                         <form action="getHighestRevenueEmployee" class="pt-1">
                             <img src="img/bestSeller.jpg"  width="60" height="60">
-                            <input type="submit" value="Best Representative" class="btn btn-success"/>
+                            <input type="submit" value="Best Representative" class="btn btn-danger"/>
                         </form>
                         <form action="getHighestRevenueCustomer" class="pt-1">
                             <img src="img/highestCumstoer.jpg"  width="60" height="60">
-                            <input type="submit" value="Best Customer" class="btn btn-success"/>
+                            <input type="submit" value="Best Customer" class="btn btn-danger"/>
                         </form>
                         <form action="viewSearchOrders" class="pt-1">
-                            <img src="img/search.png"60" height="60">
-                            <input type="submit" value="Search orders" class="btn btn-success"/>
+                            <img src="img/search.png" width="60" height="60">
+                            <input type="submit" value="Search orders" class="btn btn-danger"/>
                         </form>
                     </div>
                 </div>
@@ -83,21 +86,21 @@
                     <div class="container">
                         <form action="viewSetStockPrice">
                             <img src="img/setPrice.png"  width="60" height="60">
-                            <input type="submit" value="Set stock price" class="btn btn-primary"/>
+                            <input type="submit" value="Set stock price" class="btn btn-danger"/>
                         </form>
                         <form action="getStocks" class="pt-1">
                             <img src="img/allStocks.jpg"  width="60" height="60">
-                            <input type="submit" value="View all Stocks" class="btn btn-primary"/>
+                            <input type="submit" value="View all Stocks" class="btn btn-danger"/>
                         </form>
 
                         <form action="getBestsellers" class="pt-1">
                             <img src="img/bestSell.png"  width="60" height="60">
-                            <input type="submit" value="View Bestsellers" class="btn btn-primary"/>
+                            <input type="submit" value="View Bestsellers" class="btn btn-danger"/>
                         </form>
 
                         <form action="getActivelyTradedStocks" class="pt-1">
                             <img src="img/popularStock.png"  width="60" height="60">
-                            <input type="submit" value="Popular stocks" class="btn btn-success"/>
+                            <input type="submit" value="Popular stocks" class="btn btn-danger"/>
                         </form>
                     </div>
                 </div>

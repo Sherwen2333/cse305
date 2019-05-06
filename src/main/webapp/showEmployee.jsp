@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <input type="hidden" class="form-control" name="employeeID" value=${cd.employeeID}>
                             </div>
-                            <input type="submit" value="Edit" class="btn btn-success"/>
+                            <input type="submit" value="Edit" class="btn btn-danger"/>
                         </form>
                     </td>
                     <td>
@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <input type="hidden" class="form-control" name="employeeID" value=${cd.employeeID}>
                             </div>
-                            <input type="submit" value="Delete" class="btn btn-success"/>
+                            <input type="submit" value="Delete" class="btn btn-danger"/>
                         </form>
                     </td>
 

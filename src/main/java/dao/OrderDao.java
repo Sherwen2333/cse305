@@ -111,9 +111,9 @@ public class OrderDao {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
-            String query = "SELECT * from Orders where StockSymbol=?;";
+            String query = "SELECT * from Orders where StockSymbol='"+stockSymbol+"'";
+            System.out.println(query);
             PreparedStatement ps = con.prepareStatement(query);
-           ps.setString(1,stockSymbol);
             ResultSet rs= ps.executeQuery();
             while (rs.next()){
                 if(rs.getString(3).equals("MarketOrder")){

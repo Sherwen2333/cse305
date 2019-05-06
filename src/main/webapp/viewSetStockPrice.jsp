@@ -17,7 +17,7 @@
             <label for="stockPrice">Price</label>
             <input type="number" class="form-control" id="stockPrice" name="stockPrice" placeholder="160.0" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-danger">Submit</button>
     </form>
 </div>
 <%@ include file="footer.jsp" %>
