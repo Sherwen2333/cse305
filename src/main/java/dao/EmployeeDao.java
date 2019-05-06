@@ -2,12 +2,10 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
-import model.Customer;
-import model.Employee;
-import model.Location;
-import model.Stock;
+import model.*;
 
 
 public class EmployeeDao {
@@ -203,7 +201,7 @@ public class EmployeeDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
-			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN AND Person.SSN=Location.SSN";
+			String query = "SELECT DISTINCT * FROM Person,Location,Employee,User WHERE Person.SSN=Employee.SSN AND Person.SSN=Location.SSN AND User.SSN=Person.SSN";
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
 
@@ -221,7 +219,8 @@ public class EmployeeDao {
 				employee.setLocation(location);
 				int a=rs.getInt("Zipcode");
 				employee.setZipcode(rs.getInt("Zipcode"));
-
+				employee.setRole(""+rs.getString("Role"));
+				System.out.println(rs.getString("Role"));
 				employee.setTelephone(""+rs.getString("Telephone"));
 				employee.setEmployeeID(""+rs.getInt("SSN"));
 				employee.setHourlyRate(rs.getInt("HourlyRate"));
@@ -251,7 +250,7 @@ public class EmployeeDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
 
-			String query = "SELECT DISTINCT * FROM Person,Location,Employee WHERE Person.SSN=Employee.SSN  AND Location.SSN=Person.SSN AND Person.SSN="+employeeID;
+			String query = "SELECT DISTINCT * FROM Person,Location,Employee,User WHERE Person.SSN=Employee.SSN  AND Location.SSN=Person.SSN AND Person.SSN=User.SSN AND Person.SSN="+employeeID;
 			Statement state = con.createStatement();
 			ResultSet rs = state.executeQuery(query);
 			while (rs.next()) {
@@ -275,6 +274,7 @@ public class EmployeeDao {
 				temp.setId("" + rs.getString("SSN"));
 				temp.setStartDate("" + rs.getString("StartDate"));
 				temp.setHourlyRate(rs.getInt("HourlyRate"));
+				temp.setRole(""+rs.getString("Role"));
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -287,6 +287,25 @@ public class EmployeeDao {
 	
 	public Employee getHighestRevenueEmployee() {
 		Employee temp=new Employee();
+
+		try{
+
+			Order order=new Order();
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/zhaowhuang", "zhaowhuang", "111067886");
+			String query = "SELECT Orders.EmployeeId,SUM(Fee) as TotalAmount FROM Orders GROUP BY EmployeeId ORDER BY TotalAmount DESC LIMIT 1";
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery(query);
+			while (rs.next()) {
+
+				temp=getEmployee(rs.getString("EmployeeID"));
+			}
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		/*
 		 * The students code to fetch employee data who generated the highest revenue will be written here
