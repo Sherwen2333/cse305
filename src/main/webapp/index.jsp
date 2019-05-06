@@ -12,7 +12,8 @@
 <link href="login.css" rel="stylesheet" />
 <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
 <div class="loginBlock">
-			<h2 class="loginTitle">Login</h2>
+	<img src="img/LOGO.png" style ="display: block;margin-left: auto;margin-right: auto; width: 70%;" >
+	<h5 class="loginTitle">Login</h5>
 			<%
 				String email = (String)session.getAttribute("email");
 				String role = (String)session.getAttribute("role");

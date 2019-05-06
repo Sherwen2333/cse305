@@ -6,9 +6,6 @@
     body{
         background-image:url("img/pic.jpeg");
     }
-    .card-body{
-        background-color: #f9d4d4;
-    }
 </style>
 <div class="container">
     <h2 style="color: azure;">Customer Options:</h2>
@@ -30,8 +27,8 @@
             response.sendRedirect("index.jsp");
         }
     %>
-    <div class="row">
-    <div class="col">
+<%--    <div class="row">--%>
+<%--    <div class="col">--%>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Orders</h5>
@@ -48,8 +45,8 @@
             </div>
           </div>
         </div>
-    </div>
-    <div class="col">
+<%--    </div>--%>
+<%--    <div class="col">--%>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Stocks</h5>
@@ -77,6 +74,6 @@
             </div>
           </div>
         </div>
-    </div>
-</div>
+<%--    </div>--%>
+<%--</div>--%>
 <%@ include file="footer.jsp" %>
